@@ -3,6 +3,47 @@ body {
     background-size: cover;
 }
 
-h1 {
+#welcome {
     color: white;
+
+    -webkit-animation: fadein 2s; /* Safari, Chrome and Opera > 12.1 */
+    -moz-animation: fadein 2s; /* Firefox < 16 */
+    -ms-animation: fadein 2s; /* Internet Explorer */
+    -o-animation: fadein 2s; /* Opera < 12.1 */
+    animation: fadein 2s;
+
+    font-family: 'Petit Formal Script', cursive;
+    /* text-transform: uppercase; */
+    font-size: 40px;
+}
+
+#landingMessage {
+    color: white;
+
+    opacity: 0;
+
+    -webkit-animation: fadein 4s; /* Safari, Chrome and Opera > 12.1 */
+    -moz-animation: fadein 4s; /* Firefox < 16 */
+    -ms-animation: fadein 4s; /* Internet Explorer */
+    -o-animation: fadein 4s; /* Opera < 12.1 */
+    animation: fadein 4s;
+
+    -webkit-animation-delay: 1s; /* Safari, Chrome */
+    animation-delay: 1s;
+    /* so that opacity stays 1 after fadein complete */
+    animation-fill-mode: forwards;
+
+    font-family: 'Petit Formal Script', cursive;
+    text-transform: uppercase;
+    font-size: 70px;
+}
+
+@keyframes fadein {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
 }
