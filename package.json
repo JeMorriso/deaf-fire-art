@@ -1,12 +1,13 @@
 {
   "name": "deaf-fire-art",
   "version": "1.0.0",
-  "description": "",
+  "description": "My webpack project",
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev":"nodemon src/app.js",
-    "start":"node src/app.js"
+    "dev": "nodemon src/app.js",
+    "start": "node src/app.js",
+    "build": "webpack"
   },
   "repository": {
     "type": "git",
@@ -20,10 +21,23 @@
   },
   "homepage": "https://github.com/JeMorriso/deaf-fire-art#readme",
   "dependencies": {
+    "@uppy/core": "^1.7.0",
+    "@uppy/dashboard": "^1.5.1",
+    "@uppy/xhr-upload": "^1.4.1",
     "ejs": "^3.0.1",
     "express": "^4.17.1"
   },
   "devDependencies": {
-    "nodemon": "^2.0.2"
+    "@webpack-cli/init": "^0.2.2",
+    "babel-plugin-syntax-dynamic-import": "^6.18.0",
+    "clean-css": "^4.2.1",
+    "css-loader": "^3.4.2",
+    "mini-css-extract-plugin": "^0.9.0",
+    "nodemon": "^2.0.2",
+    "style-loader": "^1.1.2",
+    "terser-webpack-plugin": "^2.3.2",
+    "webpack": "^4.41.5",
+    "webpack-cli": "^3.3.10",
+    "workbox-webpack-plugin": "^4.3.1"
   }
 }

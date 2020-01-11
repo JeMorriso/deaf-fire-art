@@ -21,9 +21,22 @@ app.get('/', (req, res) => {
 });
 
 app.get('/gallery', (req, res) => {
-    res.render('the gallery');
+    var gallery_images = [
+        '/img/aaron-burden-Qy-CBKUg_X8-unsplash.jpg'
+    ]
+    // first parameter is the ejs file to be rendered - 2nd one is data being passed in (RHS) and what it's being named (LHS)
+    res.render('gallery', {gallery_images: gallery_images});
+});
 
-})
+// following REST guidelines - since we are updating the gallery, we should post to '/gallery'
+app.post('/gallery', (req, res) => {
+    res.send('POST ROUTE G');
+});
+
+app.get('/gallery/new', (req, res) => {
+    res.render('new.ejs')
+});
+
 app.get('/about', (req, res) => {
     res.render('about', {
         title: 'About Me',

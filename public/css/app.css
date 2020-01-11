@@ -1,11 +1,26 @@
+@import "uppload/dist/uppload.css";
+@import "uppload/dist/themes/light.css";
+
 body {
     background-image: url("../img/firewood.jpg");
     background-size: cover;
+    color: white;
+    /* background-position: center; */
+}
+
+.galleryImage {
+    max-width: 400px;
+    padding: 20px;
+    background-color: white;
+}
+
+img {
+    max-width: 100%;
+    max-height: 100%;
+    /* padding: 20px; */
 }
 
 #welcome {
-    color: white;
-
     -webkit-animation: fadein 2s; /* Safari, Chrome and Opera > 12.1 */
     -moz-animation: fadein 2s; /* Firefox < 16 */
     -ms-animation: fadein 2s; /* Internet Explorer */
@@ -18,8 +33,6 @@ body {
 }
 
 #landingMessage {
-    color: white;
-
     opacity: 0;
 
     -webkit-animation: fadein 4s; /* Safari, Chrome and Opera > 12.1 */
