@@ -25,7 +25,8 @@
     "@uppy/dashboard": "^1.5.1",
     "@uppy/xhr-upload": "^1.4.1",
     "ejs": "^3.0.1",
-    "express": "^4.17.1"
+    "express": "^4.17.1",
+    "multer": "^1.4.2"
   },
   "devDependencies": {
     "@webpack-cli/init": "^0.2.2",
