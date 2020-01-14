@@ -4,6 +4,21 @@ const multer = require('multer');
 // apparently not needed?
 const ejs = require('ejs');
 
+// set storage object
+const storage = multer.diskStorage({
+    destination: './public/uploads/',
+    // parameter names from multer docs
+    filename: function(req,file,cb) {
+        cb(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname));
+    }
+});
+
+// const upload = multer({
+//     storage: storage
+// }).single();
+
+const upload = multer({storage: storage})
+
 // get express application
 const app = express();
 // use port 3000 on local machine; process.env.PORT on heroku
@@ -33,8 +48,10 @@ app.get('/gallery', (req, res) => {
 });
 
 // following REST guidelines - since we are updating the gallery, we should post to '/gallery'
-app.post('/gallery', (req, res) => {
+app.post('/gallery', upload.array('files'), (req, res) => {
     res.send('POST ROUTE G');
+    console.log(req.body);
+    console.log(req.files);
 });
 
 app.get('/gallery/new', (req, res) => {

@@ -15,9 +15,13 @@ const uppy = Uppy()
   .use(Dashboard, {
     trigger: '#select-files'
   })
-  .use(XHRUpload, { 
+  .use(XHRUpload, {
+    bundle: true, 
     endpoint: '/gallery',
-    method: 'post'})
+    method: 'post',
+    formData: true,
+    fieldName: 'files'
+  })
 
 uppy.on('complete', (result) => {
   console.log('Upload complete! We’ve uploaded these files:', result.successful)
