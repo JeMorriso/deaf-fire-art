@@ -17,7 +17,8 @@ const storage = multer.diskStorage({
 //     storage: storage
 // }).single();
 
-const upload = multer({storage: storage})
+const upload = multer({storage: storage, limits:{fileSize: 10000000}
+})
 
 // get express application
 const app = express();
@@ -48,9 +49,8 @@ app.get('/gallery', (req, res) => {
 });
 
 // following REST guidelines - since we are updating the gallery, we should post to '/gallery'
-app.post('/gallery', upload.array('files'), (req, res) => {
-    res.send('POST ROUTE G');
-    console.log(req.body);
+// for some reason rendering the default express error handler to the browser won't work
+app.post('/gallery', upload.array('files'), (req, res, next) => {
     console.log(req.files);
 });
 
