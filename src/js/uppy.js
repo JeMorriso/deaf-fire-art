@@ -16,7 +16,7 @@ const uppy = Uppy()
     trigger: '#select-files'
   })
   .use(XHRUpload, { 
-    endpoint: 'http://localhost:3000/gallery',
+    endpoint: '/gallery',
     method: 'post'})
 
 uppy.on('complete', (result) => {

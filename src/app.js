@@ -1,6 +1,8 @@
 const express = require('express');
 const path = require('path');
 const multer = require('multer');
+// apparently not needed?
+const ejs = require('ejs');
 
 // get express application
 const app = express();
@@ -11,6 +13,8 @@ const port = process.env.PORT || 3000;
 app.set('view engine', 'ejs');
 // serve the public directory (mount this directory)
 app.use(express.static(path.join(__dirname, '../public')))
+app.use(express.static(path.join(__dirname, '../dist')))
+
 
 // mount views folder (by default express will serve <approot>/views)
     // changed to mount default folder

@@ -41,7 +41,7 @@ module.exports = {
 	mode: 'development',
 	entry: './src/js/uppy.js',
 	output: {
-		path: path.resolve(__dirname, 'public/js'),
+		path: path.resolve(__dirname, 'dist'),
 		filename: 'uppyBundle.js'
 	},
 	plugins: [
