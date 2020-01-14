@@ -24,5 +24,7 @@ const uppy = Uppy()
   })
 
 uppy.on('complete', (result) => {
-  console.log('Upload complete! We’ve uploaded these files:', result.successful)
+  // redirect from frontend due to AJAX
+  window.location.assign("/gallery");
+  //console.log('Upload complete! We’ve uploaded these files:', result.successful)
 })

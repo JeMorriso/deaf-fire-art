@@ -1,5 +1,6 @@
 const express = require('express');
 const path = require('path');
+const fs = require('fs');
 const multer = require('multer');
 // apparently not needed?
 const ejs = require('ejs');
@@ -29,7 +30,7 @@ const port = process.env.PORT || 3000;
 app.set('view engine', 'ejs');
 // serve the public directory (mount this directory)
 app.use(express.static(path.join(__dirname, '../public')))
-app.use(express.static(path.join(__dirname, '../dist')))
+app.use("/dist", express.static(path.join(__dirname, '../dist')))
 
 
 // mount views folder (by default express will serve <approot>/views)
@@ -41,21 +42,36 @@ app.get('/', (req, res) => {
 });
 
 app.get('/gallery', (req, res) => {
-    var gallery_images = [
-        '/img/aaron-burden-Qy-CBKUg_X8-unsplash.jpg'
-    ]
-    // first parameter is the ejs file to be rendered - 2nd one is data being passed in (RHS) and what it's being named (LHS)
-    res.render('gallery', {gallery_images: gallery_images});
+    // because I am in deaf-fire-art/src (due to app.use), the path here is different than locally
+    const image_dir = path.join(__dirname, '../public/uploads');
+    var gallery_images = [];
+    fs.readdir(image_dir, (err, images) => {
+        if (err) {
+            return console.log("Unable to scan directory" + err);
+        }
+        images.forEach(function (image) {
+            gallery_images.push("/uploads/" + image);
+            //console.log(gallery_images); 
+        });
+        res.render('gallery', {gallery_images: gallery_images});
+    });
+    // console.log("test"); 
+    // console.log(gallery_images)
+    // // first parameter is the ejs file to be rendered - 2nd one is data being passed in (RHS) and what it's being named (LHS)
+    // res.render('gallery', {gallery_images: gallery_images});
 });
 
 // following REST guidelines - since we are updating the gallery, we should post to '/gallery'
 // for some reason rendering the default express error handler to the browser won't work
+    // the reason is that redirects are only meant for traditional HTML form submissions
+    // Uppy is using AJAX, so it doesn't work correctly.
 app.post('/gallery', upload.array('files'), (req, res, next) => {
-    console.log(req.files);
+    //console.log(req.files);
+    res.redirect('/gallery');
 });
 
 app.get('/gallery/new', (req, res) => {
-    res.render('new.ejs')
+    res.render('new')
 });
 
 app.get('/about', (req, res) => {
