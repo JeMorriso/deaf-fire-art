@@ -1,8 +1,17 @@
 <%- include("partials/header") %>
+<!-- <header class="jumbotron">
+<h1>Image Gallery</h1>
+</header> -->
+<div class="container">
     <h1>Image Gallery</h1>
+    <a class="btn btn-primary btn-large" href="/gallery/new" class="href">Add New Image</a>
+
+    <div class="galleryRow row">
     <% gallery_images.forEach((image) => { %>
-        <div class="galleryImage">
+        <div class="galleryImage col-3">
             <img src="<%=image%>">
         </div>
     <% }); %>
+    </div>
+</div>
 <%- include("partials/footer") %>
