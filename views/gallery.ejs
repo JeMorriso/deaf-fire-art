@@ -9,7 +9,13 @@
     <div class="galleryRow row">
     <% gallery_images.forEach((image) => { %>
         <div class="galleryImage col-3">
-            <img src="<%=image%>">
+            <div class="card">
+                <img class="card-img-top" src="<%=image%>">
+                <div class="card-body">
+                    <div class="card-text">Item description</div>
+                    <div class="card-text">Item price</div>
+                </div> 
+            </div>
         </div>
     <% }); %>
     </div>
