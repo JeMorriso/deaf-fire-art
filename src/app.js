@@ -2,35 +2,63 @@ const express = require('express');
 const path = require('path');
 const fs = require('fs');
 const multer = require('multer');
-// apparently not needed?
-const ejs = require('ejs');
+const multerS3 = require('multer-s3');
+const aws = require('aws-sdk');
 
-// set storage object
-const storage = multer.diskStorage({
-    destination: './public/uploads/',
-    // parameter names from multer docs
-    filename: function(req,file,cb) {
-        cb(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname));
-    }
-});
-
-// const upload = multer({
-//     storage: storage
-// }).single();
-
-const upload = multer({storage: storage, limits:{fileSize: 10000000}
-})
+require('dotenv').config()
 
 // get express application
 const app = express();
-// use port 3000 on local machine; process.env.PORT on heroku
-const port = process.env.PORT || 3000;
 
 // res.render implicitly searches for matching file with ejs extension
 app.set('view engine', 'ejs');
 // serve the public directory (mount this directory)
 app.use(express.static(path.join(__dirname, '../public')))
 app.use("/dist", express.static(path.join(__dirname, '../dist')))
+
+// use port 3000 on local machine; process.env.PORT on heroku
+const port = process.env.PORT || 3000;
+//const config = require('../config');
+
+aws.config.update({
+    secretAccessKey: process.env.SECRETACCESSKEY,
+    accessKeyId: process.env.ACCESSKEYID, 
+    region: process.env.REGION
+});
+
+const s3 = new aws.S3();
+
+// set storage object
+// const storage = multer.diskStorage({
+//     destination: './public/uploads/',
+//     // parameter names from multer docs
+//     filename: function(req,file,cb) {
+//         cb(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname));
+//     }
+// });
+
+const upload = multer({
+    storage: multerS3({
+      s3: s3,
+      bucket: process.env.BUCKET_NAME,
+      acl: 'public-read',
+      metadata: function (req, file, cb) {
+        cb(null, {fieldName: 'testing metadata'});
+      },
+      key: function (req, file, cb) {
+        cb(null, Date.now().toString())
+      }
+    })
+  })
+
+const arrayUpload = upload.array('files');
+
+// const upload = multer({
+//     storage: storage
+// }).single();
+
+// const upload = multer({storage: storage, limits:{fileSize: 10000000}
+// })
 
 
 // mount views folder (by default express will serve <approot>/views)
@@ -65,9 +93,16 @@ app.get('/gallery', (req, res) => {
 // for some reason rendering the default express error handler to the browser won't work
     // the reason is that redirects are only meant for traditional HTML form submissions
     // Uppy is using AJAX, so it doesn't work correctly.
-app.post('/gallery', upload.array('files'), (req, res, next) => {
-    console.log(req.files);
-    console.log(req.body);
+app.post('/gallery', (req, res, next) => {
+    arrayUpload(req, res, (err) => {
+        console.log(req.files);
+        console.log(req.body);
+        if (err==null) {
+            console.log("upload successful");
+        } else {
+            console.log(err);
+        }
+    })
     res.redirect('/gallery');
 });
 
