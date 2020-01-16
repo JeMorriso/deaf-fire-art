@@ -66,7 +66,8 @@ app.get('/gallery', (req, res) => {
     // the reason is that redirects are only meant for traditional HTML form submissions
     // Uppy is using AJAX, so it doesn't work correctly.
 app.post('/gallery', upload.array('files'), (req, res, next) => {
-    //console.log(req.files);
+    console.log(req.files);
+    console.log(req.body);
     res.redirect('/gallery');
 });
 

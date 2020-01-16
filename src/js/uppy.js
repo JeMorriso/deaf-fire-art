@@ -2,7 +2,7 @@
 const Uppy = require('@uppy/core')
 const XHRUpload = require('@uppy/xhr-upload')
 const Dashboard = require('@uppy/dashboard')
-// const CleanCSS = require('clean-css')
+//const Form = require('@uppy/form')
 
 // And their styles (for UI plugins)
 require('@uppy/core/dist/style.css')
@@ -13,10 +13,17 @@ require('@uppy/dashboard/dist/style.css')
 
 const uppy = Uppy()
   .use(Dashboard, {
-    trigger: '#select-files'
+    trigger: '#select-files',
+    // inline: true,
+    // height: 300,
+    metaFields: [
+      { id: 'item-description', name: 'Item description', placeholder: 'description'},
+      { id: 'item-price', name: 'Item price', placeholder: 'price'}
+    ]
   })
   .use(XHRUpload, {
-    bundle: true, 
+    // needs to be set to false for metadata to get sent
+    // bundle: true, 
     endpoint: '/gallery',
     method: 'post',
     formData: true,
