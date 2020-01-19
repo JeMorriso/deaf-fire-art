@@ -4,39 +4,30 @@ const fs = require('fs');
 const multer = require('multer');
 const multerS3 = require('multer-s3');
 const aws = require('aws-sdk');
+const mysql = require('mysql');
 
 require('dotenv').config()
 
+// use port 3000 on local machine; process.env.PORT on heroku
+const port = process.env.PORT || 3000;
 // get express application
 const app = express();
 
 // res.render implicitly searches for matching file with ejs extension
 app.set('view engine', 'ejs');
 // serve the public directory (mount this directory)
-app.use(express.static(path.join(__dirname, '../public')))
+/*  */app.use(express.static(path.join(__dirname, '../public')))
 app.use("/dist", express.static(path.join(__dirname, '../dist')))
 
-// use port 3000 on local machine; process.env.PORT on heroku
-const port = process.env.PORT || 3000;
-//const config = require('../config');
-
+// see aws-sdk docs
 aws.config.update({
     secretAccessKey: process.env.SECRETACCESSKEY,
     accessKeyId: process.env.ACCESSKEYID, 
     region: process.env.REGION
 });
-
 const s3 = new aws.S3();
 
-// set storage object
-// const storage = multer.diskStorage({
-//     destination: './public/uploads/',
-//     // parameter names from multer docs
-//     filename: function(req,file,cb) {
-//         cb(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname));
-//     }
-// });
-
+// see multers3 docs
 const upload = multer({
     storage: multerS3({
       s3: s3,
@@ -46,24 +37,12 @@ const upload = multer({
         cb(null, {fieldName: 'testing metadata'});
       },
       key: function (req, file, cb) {
-        cb(null, Date.now().toString())
+        cb(null, path.parse(file.originalname).name + Date.now().toString() + '.jpg')
       }
     })
-  })
-
+  });
 const arrayUpload = upload.array('files');
 
-// const upload = multer({
-//     storage: storage
-// }).single();
-
-// const upload = multer({storage: storage, limits:{fileSize: 10000000}
-// })
-
-
-// mount views folder (by default express will serve <approot>/views)
-    // changed to mount default folder
-//app.set('views', path.join(__dirname, '../templates/views'));
 
 app.get('/', (req, res) => {
     res.render('index');
@@ -81,12 +60,9 @@ app.get('/gallery', (req, res) => {
             gallery_images.push("/uploads/" + image);
             //console.log(gallery_images); 
         });
+        // // first parameter is the ejs file to be rendered - 2nd one is data being passed in (RHS) and what it's being named (LHS)
         res.render('gallery', {gallery_images: gallery_images});
     });
-    // console.log("test"); 
-    // console.log(gallery_images)
-    // // first parameter is the ejs file to be rendered - 2nd one is data being passed in (RHS) and what it's being named (LHS)
-    // res.render('gallery', {gallery_images: gallery_images});
 });
 
 // following REST guidelines - since we are updating the gallery, we should post to '/gallery'
@@ -119,7 +95,7 @@ app.get('/about', (req, res) => {
 
 app.get('/admin', (req, res) => {
     res.render('admin');
-})
+});
 
 app.get('*', (req, res) => {
     res.render('404', {
