@@ -3,6 +3,11 @@ const path = require('path');
 const fs = require('fs');
 const router = express.Router();
 
+// get anything defined on module.exports in app.js
+const upload = require('../js/upload');
+console.log(upload);
+//const arrayUpload = upload.array('files');
+
 router.get('/', (req, res) => {
   res.render('index');
 });
@@ -30,7 +35,7 @@ router.get('/gallery', (req, res) => {
   // the reason is that redirects are only meant for traditional HTML form submissions
   // Uppy is using AJAX, so it doesn't work correctly.
 router.post('/gallery', (req, res, next) => {
-  arrayUpload(req, res, (err) => {
+  upload.array('files')(req, res, (err) => {
       console.log(req.files);
       console.log(req.body);
       if (err==null) {
