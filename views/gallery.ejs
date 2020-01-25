@@ -10,10 +10,10 @@
     <% gallery_images.forEach((image) => { %>
         <div class="galleryImage col-3">
             <div class="card">
-                <img class="card-img-top" src="<%=image%>">
+                <img class="card-img-top" src="<%=image.image_url%>">
                 <div class="card-body">
-                    <div class="card-text">Item description</div>
-                    <div class="card-text">Item price</div>
+                    <div class="card-text">Item description: <%=image.item_description%></div>
+                    <div class="card-text">Item price: $<%=image.item_price%></div>
                 </div> 
             </div>
         </div>

@@ -17,7 +17,7 @@ router.get('/', (req, res) => {
 router.get('/gallery', (req, res) => {
   // because I am in deaf-fire-art/src/routers/, the path here is different than locally
   const image_dir = path.join(__dirname, '../../public/uploads');
-  db.query("SELECT file_name FROM images", (err, results, fields) => {
+  db.query("SELECT file_name, item_description, item_price FROM images", (err, results, fields) => {
     if (err) {
       return console.log(err);
     }
@@ -25,7 +25,8 @@ router.get('/gallery', (req, res) => {
     var gallery_images = [];
     results.forEach((row) => {
       // console.log(row.file_name);
-      gallery_images.push(process.env.BUCKET_URL + row.file_name);
+      console.log(row.item_description)
+      gallery_images.push({image_url: process.env.BUCKET_URL + row.file_name, item_description: row.item_description, item_price: row.item_price});
     });
     // // first parameter is the ejs file to be rendered - 2nd one is data being passed in (RHS) and what it's being named (LHS)
     res.render('gallery', {gallery_images: gallery_images});
