@@ -5,6 +5,8 @@ const router = express.Router();
 
 // get anything defined on module.exports in app.js
 const upload = require('../js/upload');
+const db = require('../js/db');
+
 console.log(upload);
 //const arrayUpload = upload.array('files');
 
@@ -15,18 +17,18 @@ router.get('/', (req, res) => {
 router.get('/gallery', (req, res) => {
   // because I am in deaf-fire-art/src/routers/, the path here is different than locally
   const image_dir = path.join(__dirname, '../../public/uploads');
-  
-  var gallery_images = [];
-  fs.readdir(image_dir, (err, images) => {
-      if (err) {
-          return console.log("Unable to scan directory" + err);
-      }
-      images.forEach(function (image) {
-          gallery_images.push("/uploads/" + image);
-          // console.log(gallery_images); 
-      });
-      // // first parameter is the ejs file to be rendered - 2nd one is data being passed in (RHS) and what it's being named (LHS)
-      res.render('gallery', {gallery_images: gallery_images});
+  db.query("SELECT file_name FROM images", (err, results, fields) => {
+    if (err) {
+      return console.log(err);
+    }
+    console.log(results)
+    var gallery_images = [];
+    results.forEach((row) => {
+      // console.log(row.file_name);
+      gallery_images.push(process.env.BUCKET_URL + row.file_name);
+    });
+    // // first parameter is the ejs file to be rendered - 2nd one is data being passed in (RHS) and what it's being named (LHS)
+    res.render('gallery', {gallery_images: gallery_images});
   });
 });
 
@@ -38,10 +40,17 @@ router.post('/gallery', (req, res, next) => {
   upload.array('files')(req, res, (err) => {
       console.log(req.files);
       console.log(req.body);
-      if (err==null) {
-          console.log("upload successful");
-      } else {
+      if (err) {
           console.log(err);
+      } else {
+          console.log("upload successful");
+          const image_id = req.files[0]["key"];
+          console.log(image_id);
+          db.query("INSERT INTO images (file_name) VALUES (?)", [image_id], (err, results, fields) => {
+            if (err) {
+              console.log(err);
+            }
+          }) 
       }
   })
   res.redirect('/gallery');
