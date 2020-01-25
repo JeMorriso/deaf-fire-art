@@ -38,24 +38,32 @@ router.get('/gallery', (req, res) => {
   // Uppy is using AJAX, so it doesn't work correctly.
 router.post('/gallery', (req, res, next) => {
   upload.array('files')(req, res, (err) => {
-      console.log(req.files);
-      console.log(req.body);
+      //console.log(req.files);
+      // console.log(req.body);
       if (err) {
           console.log(err);
       } else {
-          console.log("upload successful");
+          // there is a bit of magic happening here that I am unsure of. 
+            // Basically, a new req.body is passed in for each file. 
+            // then I am able to use that unique req.body for each of the images. 
+            // req.files is an array. 
+            // due to closure, it works out, and the correct metadata is attached to the correct file
           req.files.forEach((image) => {
-            db.query("INSERT INTO images (file_name) VALUES (?)", [image.key], (err, results, fields) => {
-              if (err) {
-                console.log(err);
-              }
-            }); 
-          });
-          // const image_id = req.files[0]["key"];
-          // console.log(image_id);
-
-      }
-  })
+            // because req.body has null prototype here, we need to use this syntax in order to call object.prototype, which DOES have hasOwnProperty, while req.body does not
+            // var item_description = Object.prototype.hasOwnProperty.call(req.body, 'item-description') ? req.body['item-description'] : 'NULL';
+            // var item_price = Object.prototype.hasOwnProperty.call(req.body, 'item-price') ? req.body['item-price'] : 'NULL'
+            const item_description = req.body['item-description'];
+            const item_price = req.body['item-price'];
+            db.query({
+              sql: `INSERT INTO images SET file_name=?, item_description=?, item_price=?`,
+              values:  [image.key,item_description,item_price]}, (err, results, fields) => {
+                if (err) {
+                  console.log(err);
+                }
+              }); 
+          })
+        }
+  });
   res.redirect('/gallery');
 });
 
