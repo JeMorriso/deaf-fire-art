@@ -44,13 +44,16 @@ router.post('/gallery', (req, res, next) => {
           console.log(err);
       } else {
           console.log("upload successful");
-          const image_id = req.files[0]["key"];
-          console.log(image_id);
-          db.query("INSERT INTO images (file_name) VALUES (?)", [image_id], (err, results, fields) => {
-            if (err) {
-              console.log(err);
-            }
-          }) 
+          req.files.forEach((image) => {
+            db.query("INSERT INTO images (file_name) VALUES (?)", [image.key], (err, results, fields) => {
+              if (err) {
+                console.log(err);
+              }
+            }); 
+          });
+          // const image_id = req.files[0]["key"];
+          // console.log(image_id);
+
       }
   })
   res.redirect('/gallery');
