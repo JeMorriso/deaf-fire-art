@@ -65,7 +65,6 @@ router.post('/gallery', (req, res, next) => {
           })
         }
   });
-  res.redirect('/gallery');
 });
 
 router.get('/gallery/new', (req, res) => {
