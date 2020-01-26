@@ -11,7 +11,12 @@ require('@uppy/dashboard/dist/style.css')
 // didn't work, not sure why
 //var css = new CleanCSS().minify(['@uppy/core/dist/style.css','@uppy/dashboard/dist/style.css'])
 
-const uppy = Uppy()
+const uppy = Uppy({
+  restrictions: {
+    // maxFileSize: 4000000,
+    allowedFileTypes: ['image/*']
+  }
+})
   .use(Dashboard, {
     trigger: '#select-files',
     // inline: true,
@@ -19,7 +24,7 @@ const uppy = Uppy()
     metaFields: [
       { id: 'item-description', name: 'Item description', placeholder: 'description'},
       { id: 'item-price', name: 'Item price', placeholder: 'price'}
-    ]
+    ],
   })
   .use(XHRUpload, {
     // needs to be set to false for metadata to get sent

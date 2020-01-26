@@ -63,6 +63,9 @@ router.post('/gallery', (req, res, next) => {
                 }
               }); 
           })
+        // FIX THIS - for some reason heroku not getting a response back even when files are successfully uploaded to mysql.
+          // It works on localhost and using `heroku local`, but not on heroku
+          // this statement allows uppy to recognize that the upload is complete
         res.sendStatus(200);
         }
   });
