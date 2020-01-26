@@ -10,7 +10,7 @@
     <% gallery_images.forEach((image) => { %>
         <div class="galleryImage col-3">
             <div class="card">
-                <img class="card-img-top" src="<%=image.image_url%>">
+                <a href="<%=image.image_url%>" data-lightbox="image-1"><img class="card-img-top" src="<%=image.image_url%>"></a>
                 <div class="card-body">
                     <div class="card-text">Item description: <%=image.item_description%></div>
                     <div class="card-text">Item price: $<%=image.item_price%></div>
@@ -20,4 +20,5 @@
     <% }); %>
     </div>
 </div>
+<script src="/dist/lightbox-plus-jquery.min.js"></script>
 <%- include("partials/footer") %>
