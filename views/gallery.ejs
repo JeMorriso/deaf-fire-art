@@ -1,14 +1,19 @@
 <%- include("partials/header") %>
+<link rel="stylesheet" href="/css/gallery.css">
 </head>
 <body>
-<!-- <header class="jumbotron">
+    <header>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="/gallery">Gallery</a></li>
+                <li><a href="/about">About</a></li>
+            </ul>
+        </nav>
+    </header>
 <h1>Image Gallery</h1>
-</header> -->
-<div class="container">
-    <h1>Image Gallery</h1>
-    <a class="btn btn-primary btn-large" href="/gallery/new" class="href">Add New Image</a>
-
-    <div class="galleryRow row">
+<a class="btn btn-primary btn-large" href="/gallery/new" class="href">Add New Image</a>
+<div class="gallery-container">
     <% gallery_images.forEach((image) => { %>
         <div class="galleryImage col-3">
             <div class="card">
@@ -20,7 +25,6 @@
             </div>
         </div>
     <% }); %>
-    </div>
 </div>
 <script src="/dist/lightbox-plus-jquery.min.js"></script>
 <script>
