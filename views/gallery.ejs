@@ -11,11 +11,10 @@
             </ul>
         </nav>
     </header>
-<h1>Image Gallery</h1>
 <a class="btn btn-primary btn-large" href="/gallery/new" class="href">Add New Image</a>
 <div class="gallery-container">
     <% gallery_images.forEach((image) => { %>
-        <div class="galleryImage col-3">
+        <div class="gallery-image col-3">
             <div class="card">
                 <a href="<%=image.image_url%>" data-lightbox="image-1" data-title="<%=image.item_description%>" data-alt="<%=image.item_description%>"><img class="card-img-top" src="<%=image.image_url%>"></a>
                 <div class="card-body">

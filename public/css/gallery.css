@@ -1,15 +1,19 @@
 .gallery-container {
   display: grid;
   grid-template-columns: auto auto auto auto;
-  background: rgba(143, 143, 143, 0.5);
+  grid-gap: 50px;
+  max-width: 1200px;
+  margin: auto;
+  /* background: rgba(143, 143, 143, 0.5); */
   /* height: 100%; */
   /* display: flex; */
 }
 
-.galleryImage {
+.gallery-image {
     max-width: 400px;
     padding: 10px;
-    /* background-color: white; */
+    background-color: white;
+    color: black;
 }
 
 .galleryRow {

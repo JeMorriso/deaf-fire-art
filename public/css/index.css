@@ -1,3 +1,6 @@
+div {
+  font-family: 'Kaushan Script', cursive;
+}
 
 #welcome {
   -webkit-animation: fadein 2s; /* Safari, Chrome and Opera > 12.1 */
@@ -6,7 +9,6 @@
   -o-animation: fadein 2s; /* Opera < 12.1 */
   animation: fadein 2s;
 
-  font-family: 'Petit Formal Script', cursive;
   /* text-transform: uppercase; */
   font-size: 40px;
 }
@@ -25,7 +27,6 @@
   /* so that opacity stays 1 after fadein complete */
   animation-fill-mode: forwards;
 
-  font-family: 'Petit Formal Script', cursive;
   text-transform: uppercase;
   font-size: 70px;
 }
