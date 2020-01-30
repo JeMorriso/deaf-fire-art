@@ -25,6 +25,27 @@
         </div>
     <% }); %>
 </div>
+
+<button id="open-button" onclick="openForm()">Email Sandy</button>
+<div id="email-popup">
+    <!-- not sure what route I should use -->
+    <form action="#" id="email-form">
+      <h1>Email Sandy</h1>
+  
+      <label for="email"><b>Email</b></label>
+      <input type="text" placeholder="Your Email" name="email" required>
+  
+      <label for="subject"><b>Subject</b></label>
+      <input type="text" placeholder="Subject" name="subject" required>
+      
+      <label for="body"><b>Body</b></label>
+      <textarea placeholder="Enter text here..." name="body" required></textarea>
+      
+      <button type="submit">Send Email</button>
+      <button onclick="closeForm()">Cancel</button>
+    </form>
+</div>
+<script src="/js/gallery.js"></script>
 <script src="/dist/lightbox-plus-jquery.min.js"></script>
 <script>
     lightbox.option({
