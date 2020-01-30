@@ -15,7 +15,13 @@ const uppy = Uppy({
   restrictions: {
     // maxFileSize: 4000000,
     allowedFileTypes: ['image/*']
-  }
+  },
+  // onBeforeUpload: (files) => {
+  //   Object.keys(files).forEach(fileID => {
+  //     console.log(files[fileID].name)
+  //   })
+    // console.log("the files: " + files);
+  // }
 })
   .use(Dashboard, {
     trigger: '#select-files',
@@ -40,4 +46,3 @@ uppy.on('complete', (result) => {
   //window.location.assign("/gallery");
   console.log('Upload complete! We’ve uploaded these files:', result.successful)
 })
-

@@ -1,6 +1,7 @@
 const express = require('express');
 const path = require('path');
 const fs = require('fs');
+const sharp = require('sharp');
 const router = express.Router();
 
 // get anything defined on module.exports in app.js
