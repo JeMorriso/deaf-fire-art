@@ -8,7 +8,7 @@ const router = express.Router();
 const upload = require('../js/upload');
 const db = require('../js/db');
 
-console.log(upload);
+// console.log(upload);
 //const arrayUpload = upload.array('files');
 
 router.get('/', (req, res) => {
@@ -39,8 +39,8 @@ router.get('/gallery', (req, res) => {
   // the reason is that redirects are only meant for traditional HTML form submissions
   // Uppy is using AJAX, so it doesn't work correctly.
 router.post('/gallery', (req, res, next) => {
-  upload.array('files')(req, res, (err) => {
-      //console.log(req.files);
+  upload.upload.array('files')(req, res, (err) => {
+      console.log(req.files);
       // console.log(req.body);
       if (err) {
           console.log(err);
@@ -51,18 +51,91 @@ router.post('/gallery', (req, res, next) => {
             // req.files is an array. 
             // due to closure, it works out, and the correct metadata is attached to the correct file
           req.files.forEach((image) => {
-            // because req.body has null prototype here, we need to use this syntax in order to call object.prototype, which DOES have hasOwnProperty, while req.body does not
-            // var item_description = Object.prototype.hasOwnProperty.call(req.body, 'item-description') ? req.body['item-description'] : 'NULL';
-            // var item_price = Object.prototype.hasOwnProperty.call(req.body, 'item-price') ? req.body['item-price'] : 'NULL'
-            const item_description = req.body['item-description'];
-            const item_price = req.body['item-price'];
-            db.query({
-              sql: `INSERT INTO images SET file_name=?, item_description=?, item_price=?`,
-              values:  [image.key,item_description,item_price]}, (err, results, fields) => {
-                if (err) {
-                  console.log(err);
+            const small_fname = path.parse(image.filename).name + "-small.jpg";
+            const big_fname = path.parse(image.filename).name + "-big.jpg";
+            var small_s3 = "";
+            var big_s3 = "";
+
+            sharp(image.path)
+              .resize({ 
+                  width: 400,
+                  height: 300
+              })
+              .toFile(path.join(__dirname, "../processed_uploads/" + small_fname))
+              .then(() => {
+                const file_content = fs.readFileSync(path.join(__dirname, "../processed_uploads/" + small_fname));                
+                const params = {
+                  Bucket: process.env.BUCKET_NAME,
+                  Key: small_fname,
+                  Body: file_content
                 }
-              }); 
+                upload.s3.upload(params, (err, data) => {
+                  if (err) {
+                    console.log(err);
+                  } else {
+                    console.log("the key: " + data.Key)
+                    small_s3 = data.Key;
+                    const item_description = req.body['item-description'];
+                    const item_price = req.body['item-price'];
+                    db.query({
+                      sql: `INSERT INTO images SET file_name=?, small_image=true, item_description=?, item_price=?`,
+                      values:  [small_s3,item_description,item_price]}, (err, results, fields) => {
+                        if (err) {
+                          console.log(err);
+                        }
+                      }); 
+                  }
+                })
+              });
+
+            sharp(image.path)
+              .resize({ 
+                height: 900
+              })
+              .toFile(path.join(__dirname, "../processed_uploads/" + big_fname))
+              .then(() => {
+                const file_content = fs.readFileSync(path.join(__dirname, "../processed_uploads/" + big_fname));                
+                const params = {
+                  Bucket: process.env.BUCKET_NAME,
+                  Key: big_fname,
+                  Body: file_content
+                }
+                upload.s3.upload(params, (err, data) => {
+                  if (err) {
+                    console.log(err);
+                  } else {
+                    big_s3 = data.Key;
+                    const item_description = req.body['item-description'];
+                    const item_price = req.body['item-price'];
+                    db.query({
+                      sql: `INSERT INTO images SET file_name=?, small_image=false, item_description=?, item_price=?`,
+                      values:  [big_s3,item_description,item_price]}, (err, results, fields) => {
+                        if (err) {
+                          console.log(err);
+                        }
+                      });
+                    }
+                })
+              });
+
+            // //upload.s3.upload(path.join(__dirname, "../processed_uploads/" + small_fname), 
+            
+            // const item_description = req.body['item-description'];
+            // const item_price = req.body['item-price'];
+            // db.query({
+            //   sql: `INSERT INTO images SET file_name=?, small_image=true, item_description=?, item_price=?`,
+            //   values:  [small_s3,item_description,item_price]}, (err, results, fields) => {
+            //     if (err) {
+            //       console.log(err);
+            //     }
+            //   }); 
+            // db.query({
+            //   sql: `INSERT INTO images SET file_name=?, small_image=false, item_description=?, item_price=?`,
+            //   values:  [big_s3,item_description,item_price]}, (err, results, fields) => {
+            //     if (err) {
+            //       console.log(err);
+            //     }
+            //   });
           })
         // FIX THIS - for some reason heroku not getting a response back even when files are successfully uploaded to mysql.
           // It works on localhost and using `heroku local`, but not on heroku
@@ -70,6 +143,7 @@ router.post('/gallery', (req, res, next) => {
         res.sendStatus(200);
         }
   });
+
 });
 
 router.get('/gallery/new', (req, res) => {
