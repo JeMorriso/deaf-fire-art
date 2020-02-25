@@ -55,9 +55,9 @@ router.post('/gallery', (req, res, next) => {
                   width: 400,
                   height: 300
               })
-              .toFile(path.join(__dirname, "../../public/processed_uploads/" + small_fname))
+              .toFile(path.join(__dirname, "../processed_uploads/" + small_fname))
               .then(() => {
-                const file_content = fs.readFileSync(path.join(__dirname, "../../public/processed_uploads/" + small_fname));                
+                const file_content = fs.readFileSync(path.join(__dirname, "../processed_uploads/" + small_fname));                
                 const params = {
                   Bucket: process.env.BUCKET_NAME,
                   Key: small_fname,
@@ -89,9 +89,9 @@ router.post('/gallery', (req, res, next) => {
               .resize({ 
                 height: 900
               })
-              .toFile(path.join(__dirname, "../../public/processed_uploads/" + big_fname))
+              .toFile(path.join(__dirname, "../processed_uploads/" + big_fname))
               .then(() => {
-                const file_content = fs.readFileSync(path.join(__dirname, "../../public/processed_uploads/" + big_fname));                
+                const file_content = fs.readFileSync(path.join(__dirname, "../processed_uploads/" + big_fname));                
                 const params = {
                   Bucket: process.env.BUCKET_NAME,
                   Key: big_fname,
