@@ -4,8 +4,7 @@ use deaf_fire_art;
 
 create table images (
     id int auto_increment primary key,
-    file_name varchar(255) not null,
-    small_image boolean not null,
+    file_prefix varchar(255) not null,
     item_description varchar(255),
     item_price decimal(13, 2),
     created_at timestamp default now()

@@ -16,7 +16,7 @@
     <% gallery_images.forEach((image) => { %>
         <div class="gallery-image col-3">
             <div class="card">
-                <a href="<%=image.image_url%>" data-lightbox="image-1" data-title="<%=image.item_description%>" data-alt="<%=image.item_description%>"><img class="card-img-top" src="<%=image.image_url%>"></a>
+                <a href="<%=image.image_url_prefix + '-big.jpg'%>" data-lightbox="image-1" data-title="<%=image.item_description%>" data-alt="<%=image.item_description%>"><img class="card-img-top" src="<%=image.image_url_prefix + '-small.jpg'%>"></a>
                 <div class="card-body">
                     <div class="card-text"><%=image.item_description%></div>
                     <div class="card-text">$<%=image.item_price%></div>
