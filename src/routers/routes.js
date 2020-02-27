@@ -4,6 +4,15 @@ const fs = require('fs');
 const sharp = require('sharp');
 const passport = require('passport');
 
+const mongoose = require("mongoose");
+// these lines are needed to avoid deprecation warnings
+mongoose.set('useNewUrlParser', true);
+mongoose.set('useUnifiedTopology', true);
+
+mongoose.connect("mongodb://localhost/tester");
+
+const Admin = require('../js/admin');
+
 const router = express.Router();
 
 // get anything defined on module.exports in app.js
@@ -131,10 +140,38 @@ router.get('/admin', (req, res) => {
   res.render('admin');
 });
 
-router.post('/admin', passport.authenticate('local-login', { failureRedirect: '/admin' }),
+// here we're using passport.authenticate as middleware so that a successful login
+  // redirects to gallery page
+// passport automatically pulls username and password from form and matches it against the hash
+  // stored in the db
+router.post('/admin', passport.authenticate("local", {
+  successRedirect: "/gallery",
+  failureRedirect: "/admin"
+}),
   (req, res) => {
-    res.redirect('/');
+    console.log(req.body.username);
+    console.log(req.body.password);
+})
+
+router.get('/register', (req, res) => {
+  res.render('register');
 });
+
+router.post('/register', (req, res) => {
+  // this method will hash the password
+    // if it worked, the new user is returned as the second argument to the callback function
+  Admin.register(new Admin({username: req.body.username}), req.body.password, (err, user) => {
+    if (err) {
+      console.log(err);
+      // go back to the register page
+      return res.render('register');
+    }  
+    // runs the serializeUser() method using the local strategy
+    passport.authenticate("local")(req, res, () => {
+      return res.redirect('gallery');
+    })
+  })
+})
 
 router.get('*', (req, res) => {
   res.render('404', {
