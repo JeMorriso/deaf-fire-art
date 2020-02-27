@@ -2,6 +2,7 @@ const express = require('express');
 const path = require('path');
 const fs = require('fs');
 const sharp = require('sharp');
+const passport = require('passport');
 
 const router = express.Router();
 
@@ -130,8 +131,9 @@ router.get('/admin', (req, res) => {
   res.render('admin');
 });
 
-router.post('/admin', (req, res) => {
-  res.send("REGISTER ROTE")
+router.post('/admin', passport.authenticate('local-login', { failureRedirect: '/admin' }),
+  (req, res) => {
+    res.redirect('/');
 });
 
 router.get('*', (req, res) => {
