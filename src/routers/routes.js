@@ -23,7 +23,11 @@ router.get('/', (req, res) => {
   res.render('index');
 });
 
-router.get('/gallery', (req, res) => {
+router.get('/gallery', isLoggedIn, (req, res) => {
+  if (res.locals.isLoggedIn === true) {
+    console.log("logged in!");
+  }
+
   db.query("SELECT file_prefix, item_description, item_price FROM images", (err, results, fields) => {
     if (err) {
       return console.log(err);
@@ -44,7 +48,7 @@ router.get('/gallery', (req, res) => {
 // for some reason rendering the default express error handler to the browser won't work
   // the reason is that redirects are only meant for traditional HTML form submissions
   // Uppy is using AJAX, so it doesn't work correctly.
-router.post('/gallery', (req, res, next) => {
+router.post('/gallery', isLoggedIn, (req, res, next) => {
   upload.upload.array('files')(req, res, (err) => {
       console.log(req.files);
       // console.log(req.body);
@@ -136,17 +140,17 @@ router.get('/about', (req, res) => {
   });
 });
 
-router.get('/admin', (req, res) => {
-  res.render('admin');
+router.get('/login', (req, res) => {
+  res.render('login');
 });
 
 // here we're using passport.authenticate as middleware so that a successful login
   // redirects to gallery page
 // passport automatically pulls username and password from form and matches it against the hash
   // stored in the db
-router.post('/admin', passport.authenticate("local", {
+router.post('/login', passport.authenticate("local", {
   successRedirect: "/gallery",
-  failureRedirect: "/admin"
+  failureRedirect: "/login"
 }),
   (req, res) => {
     console.log(req.body.username);
@@ -171,7 +175,14 @@ router.post('/register', (req, res) => {
       return res.redirect('gallery');
     })
   })
-})
+});
+
+// note here we don't even need to set up a view, since it just redirects straightaway
+router.get('/logout', (req, res) => {
+  // passport gives us access to this method
+  req.logout();
+  res.redirect('/');
+});
 
 router.get('*', (req, res) => {
   res.render('404', {
@@ -180,5 +191,18 @@ router.get('*', (req, res) => {
       name: "Jeremy Morrison"
   });
 });
+
+function isLoggedIn(req, res, next) {
+  // this method is from Passport
+  if (req.isAuthenticated()) {
+    // pass data to next function in middleware chain using res.locals
+    res.locals.isLoggedIn = true;
+    // next assumes parameters are errors, so we can't pass in data as a parameter
+    return next();
+  }
+  res.locals.isLoggedIn = false;
+  return next();
+
+}
 
 module.exports = router;
