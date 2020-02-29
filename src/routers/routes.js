@@ -40,7 +40,7 @@ router.get('/gallery', isLoggedIn, (req, res) => {
       gallery_images.push({image_url_prefix: process.env.BUCKET_URL + row.file_prefix, item_description: row.item_description, item_price: row.item_price});
     });
     // // first parameter is the ejs file to be rendered - 2nd one is data being passed in (RHS) and what it's being named (LHS)
-    res.render('gallery', {gallery_images: gallery_images});
+    res.render('gallery', {gallery_images: gallery_images, isLoggedIn: res.locals.isLoggedIn});
   });
 });
 
@@ -202,7 +202,6 @@ function isLoggedIn(req, res, next) {
   }
   res.locals.isLoggedIn = false;
   return next();
-
 }
 
 module.exports = router;

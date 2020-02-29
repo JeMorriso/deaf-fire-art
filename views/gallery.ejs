@@ -11,7 +11,11 @@
             </ul>
         </nav>
     </header>
-<a class="btn btn-primary btn-large" href="/gallery/new" class="href">Add New Image</a>
+<!-- easiest way to use props from res.render is just inserting js here, instead of using a new js file -->
+<% if (isLoggedIn) { %>
+<a class="btn admin" href="/gallery/new">Add New Image</a>
+<button class="admin">Edit Images</button>
+<% } %>
 <div class="gallery-container">
     <% gallery_images.forEach((image) => { %>
         <div class="gallery-image col-3">
@@ -25,7 +29,6 @@
         </div>
     <% }); %>
 </div>
-
 <button id="open-button" onclick="openForm()">Email Sandy</button>
 <div id="email-popup">
     <!-- not sure what route I should use -->
