@@ -20,6 +20,9 @@
 <div class="gallery-container">
     <% gallery_images.forEach((image) => { %>
         <div class="gallery-image col-3">
+            <% if (isLoggedIn) { %>
+                <i class="fas fa-window-close delete-image"></i>
+            <% } %>
             <div class="card">
                 <a href="<%=image.image_url_prefix + '-big.jpg'%>" data-lightbox="image-1" data-title="<%=image.item_description%>" data-alt="<%=image.item_description%>"><img class="card-img-top" src="<%=image.image_url_prefix + '-small.jpg'%>"></a>
                 <div class="card-body">
@@ -33,6 +36,10 @@
         </div>
     <% }); %>
 </div>
+<% if (isLoggedIn) { %>
+<button id="delete-button">Delete Images</button>
+<button id="cancel-button">Cancel</button>
+<% } %>
 <button id="open-button" class="transparent-button">Email Sandy</button>
 <div id="email-popup">
     <!-- not sure what route I should use -->

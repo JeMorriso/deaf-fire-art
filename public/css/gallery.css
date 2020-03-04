@@ -41,6 +41,10 @@ img {
   transition: background-color .25s;
 }
 
+#delete-button, #cancel-button {
+  display: none;
+}
+
 #open-button {
   position: fixed;
   bottom: 20px;
@@ -62,6 +66,6 @@ img {
   width: 100%;
 }
 
-#email-icon {
+.email-icon, .delete-image {
   cursor: pointer; 
 }
