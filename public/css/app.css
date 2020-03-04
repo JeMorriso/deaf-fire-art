@@ -29,32 +29,19 @@ nav li {
   cursor: pointer;
 }
 
-a:hover, button:hover {
+a:hover {
   background-color: white;
   color: #7f7f7f;
 }
 
-a, button {
-  color: white;
+a {
   border-radius: 8px;
   padding: 4px;
   transition: background-color .25s;
   /* using em here so that font size dynamically changes with browser font size */
   font-size: 1.5em;
-}
-
-a {
+  color: white;
   text-decoration: none;
-}
-
-button {
-  background-color: Transparent;
-  border: none;
-  cursor: pointer;
-  outline: none;
-  /* override default button font */
-  font-family: 'Nunito', sans-serif;
-  display: block;
 }
 
 ul {

@@ -1,4 +1,5 @@
 <%- include("partials/header") %>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/all.min.css" rel="stylesheet">
 <link rel="stylesheet" href="/css/gallery.css">
 </head>
 <body>
@@ -14,7 +15,7 @@
 <!-- easiest way to use props from res.render is just inserting js here, instead of using a new js file -->
 <% if (isLoggedIn) { %>
 <a class="btn admin" href="/gallery/new">Add New Image</a>
-<button class="admin">Edit Images</button>
+<button id="edit-image-button" class="transparent-button">Edit Images</button>
 <% } %>
 <div class="gallery-container">
     <% gallery_images.forEach((image) => { %>
@@ -23,29 +24,32 @@
                 <a href="<%=image.image_url_prefix + '-big.jpg'%>" data-lightbox="image-1" data-title="<%=image.item_description%>" data-alt="<%=image.item_description%>"><img class="card-img-top" src="<%=image.image_url_prefix + '-small.jpg'%>"></a>
                 <div class="card-body">
                     <div class="card-text"><%=image.item_description%></div>
-                    <div class="card-text">$<%=image.item_price%></div>
+                    <div class="card-text">
+                        $<%=image.item_price%>
+                        <i class="fas fa-envelope email-icon"></i>
+                    </div>
                 </div> 
             </div>
         </div>
     <% }); %>
 </div>
-<button id="open-button" onclick="openForm()">Email Sandy</button>
+<button id="open-button" class="transparent-button">Email Sandy</button>
 <div id="email-popup">
     <!-- not sure what route I should use -->
     <form action="#" id="email-form">
       <h1>Email Sandy</h1>
   
       <label for="email"><b>Email</b></label>
-      <input type="text" placeholder="Your Email" name="email" required>
+      <input id="email-address" type="text" placeholder="Your Email" name="email" required>
   
       <label for="subject"><b>Subject</b></label>
-      <input type="text" placeholder="Subject" name="subject" required>
+      <input id="email-subject" type="text" placeholder="Subject" name="subject" required>
       
       <label for="body"><b>Body</b></label>
-      <textarea placeholder="Enter text here..." name="body" required></textarea>
+      <textarea id="email-body" placeholder="Enter text here..." name="body" required></textarea>
       
       <button type="submit">Send Email</button>
-      <button onclick="closeForm()">Cancel</button>
+      <button id="cancel-button">Cancel</button>
     </form>
 </div>
 <script src="/js/gallery.js"></script>

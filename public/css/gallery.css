@@ -28,11 +28,25 @@ img {
     border-radius: 6px;
 }
 
+.transparent-button {
+  color: white;
+  background-color: Transparent;
+  border: none;
+  cursor: pointer;
+  outline: none;
+  /* override default button font */
+  font-family: 'Nunito', sans-serif;
+  font-size: 1.5em;
+  display: block;
+  transition: background-color .25s;
+}
+
 #open-button {
   position: fixed;
   bottom: 20px;
   right: 20px;
 }
+
 #email-popup {
  max-width: 400px;
  display: none;
@@ -46,4 +60,8 @@ img {
 
 #email-popup textarea, input {
   width: 100%;
+}
+
+#email-icon {
+  cursor: pointer; 
 }
