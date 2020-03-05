@@ -28,6 +28,7 @@ app.set('view engine', 'ejs');
 // attach form data to request body
     // form data comes as urlencoded
 app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
 
 // serve the public directory (mount this directory)
 app.use(express.static(path.join(__dirname, '../public')));

@@ -33,19 +33,53 @@ for (let i = 0; i < deleteIcons.length; i++) {
     if (window.getComputedStyle(document.getElementById("delete-button")).getPropertyValue("display") === "none") {
       document.getElementById("delete-button").style.display = "inline-block";
     }
-    if (window.getComputedStyle(document.getElementById("cancel-button")).getPropertyValue("display") === "none") {
-      document.getElementById("cancel-button").style.display = "inline-block";
+    if (window.getComputedStyle(document.getElementById("cancel-delete")).getPropertyValue("display") === "none") {
+      document.getElementById("cancel-delete").style.display = "inline-block";
     }
     deleteIcons[i].parentElement.style.display = "none";
   })
 }
 
-document.getElementById("cancel-button").addEventListener("click", () => {
+document.getElementById("cancel-delete").addEventListener("click", () => {
   var galleryImages = document.getElementsByClassName("gallery-image");
   for (let i = 0; i < galleryImages.length; i++) {
     galleryImages[i].style.display = "block";    
   }
 })
+
+document.getElementById("delete-button").addEventListener("click", () => {
+
+  // stores all the files that are to be deleted on the backend
+  const data = [];
+
+  //const data2 = {hello: 'governor'};
+
+  var galleryImages = document.getElementsByClassName("gallery-image");
+  for (let i = 0; i < galleryImages.length; i++) {
+    // if display is set to none, add file name to be deleted on backend
+    if (galleryImages[i].style.display === "none") {
+      data.push(galleryImages[i].dataset.filename);
+      console.log(data);
+    }
+  }
+
+  fetch('/gallery/delete', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(data)
+  })
+    .then((res) => {
+      return res.json();
+    })
+    .then((data) => {
+      console.log('Success:', data);
+      alert("Images successfully deleted!")
+    }).catch((error) => {
+      console.error('Error:', error);
+    });
+});
 
 // function openFormWithDescription(itemDescription) {
 //   document.getElementById("email-popup").style.display = "block";

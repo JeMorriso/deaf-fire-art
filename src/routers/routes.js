@@ -133,6 +133,23 @@ router.get('/gallery/new', (req, res) => {
   res.render('new')
 });
 
+router.post('/gallery/delete', (req, res) => {
+  console.log(req.body);
+
+  // delete image passed in on req.body from database
+  req.body.forEach((file) => {
+    db.query({
+        'sql': 'delete from images where file_prefix = ?',
+        'values': [file]
+      }, (err, results, fields) => {
+        if (err) {
+          console.log(err);
+        }
+      }); 
+  });
+  res.send({hello: 'gubna'}); 
+});
+
 router.get('/about', (req, res) => {
   res.render('about', {
       title: 'About Me',

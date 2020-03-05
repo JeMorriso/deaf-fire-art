@@ -41,7 +41,7 @@ img {
   transition: background-color .25s;
 }
 
-#delete-button, #cancel-button {
+#delete-button, #cancel-delete {
   display: none;
 }
 

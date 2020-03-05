@@ -19,7 +19,7 @@
 <% } %>
 <div class="gallery-container">
     <% gallery_images.forEach((image) => { %>
-        <div class="gallery-image col-3">
+        <div class="gallery-image col-3" data-filename="<%= image.file_prefix%>">
             <% if (isLoggedIn) { %>
                 <i class="fas fa-window-close delete-image"></i>
             <% } %>
@@ -38,7 +38,7 @@
 </div>
 <% if (isLoggedIn) { %>
 <button id="delete-button">Delete Images</button>
-<button id="cancel-button">Cancel</button>
+<button id="cancel-delete">Cancel</button>
 <% } %>
 <button id="open-button" class="transparent-button">Email Sandy</button>
 <div id="email-popup">
