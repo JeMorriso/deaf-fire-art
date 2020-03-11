@@ -16,11 +16,13 @@ document.getElementById("cancel-button").addEventListener("click", () => {
 });
 
 var imageIcons = document.getElementsByClassName("email-icon");
+var toggle = "block";
 
 for(let i = 0; i < imageIcons.length; i++) {
   imageIcons[i].addEventListener("click", function() {
     var itemDescription = imageIcons[i].parentElement.previousElementSibling.innerText;
-    document.getElementById("email-popup").style.display = "block";
+    document.getElementById("email-popup").style.display = toggle;
+    toggle = toggle === "block" ? "none" : "block";
     document.getElementById("email-subject").value = itemDescription;
   })
 }
@@ -75,7 +77,7 @@ document.getElementById("delete-button").addEventListener("click", () => {
     })
     .then((data) => {
       console.log('Success:', data);
-      alert("Images successfully deleted!")
+      //alert("Images successfully deleted!")
     }).catch((error) => {
       console.error('Error:', error);
     });

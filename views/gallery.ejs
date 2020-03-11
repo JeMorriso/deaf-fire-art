@@ -15,21 +15,24 @@
 <!-- easiest way to use props from res.render is just inserting js here, instead of using a new js file -->
 <% if (isLoggedIn) { %>
 <a class="btn admin" href="/gallery/new">Add New Image</a>
-<button id="edit-image-button" class="transparent-button">Edit Images</button>
 <% } %>
 <div class="gallery-container">
     <% gallery_images.forEach((image) => { %>
-        <div class="gallery-image col-3" data-filename="<%= image.file_prefix%>">
+    <div class="gallery-image col-3" data-filename="<%= image.file_prefix%>">
             <% if (isLoggedIn) { %>
                 <i class="fas fa-window-close delete-image"></i>
             <% } %>
             <div class="card">
-                <a href="<%=image.image_url_prefix + '-big.jpg'%>" data-lightbox="image-1" data-title="<%=image.item_description%>" data-alt="<%=image.item_description%>"><img class="card-img-top" src="<%=image.image_url_prefix + '-small.jpg'%>"></a>
+                <div class="card-top">
+                    <a href="<%=image.image_url_prefix + '-big.jpg'%>" data-lightbox="image-1" data-title="<%=image.item_description%>" data-alt="<%=image.item_description%>"><img class="card-img-top" src="<%=image.image_url_prefix + '-small.jpg'%>"></a>
+                </div>
                 <div class="card-body">
-                    <div class="card-text"><%=image.item_description%></div>
-                    <div class="card-text">
-                        $<%=image.item_price%>
-                        <i class="fas fa-envelope email-icon"></i>
+                    <div>
+                        <div class="card-text"><%=image.item_description%></div>
+                        <div>
+                            $<%=image.item_price%>
+                            <i class="fas fa-envelope email-icon"></i>
+                        </div>
                     </div>
                 </div> 
             </div>
@@ -40,7 +43,9 @@
 <button id="delete-button">Delete Images</button>
 <button id="cancel-delete">Cancel</button>
 <% } %>
+<div id="open-button-div">
 <button id="open-button" class="transparent-button">Email Sandy</button>
+</div>
 <div id="email-popup">
     <!-- not sure what route I should use -->
     <form action="#" id="email-form">
@@ -55,8 +60,10 @@
       <label for="body"><b>Body</b></label>
       <textarea id="email-body" placeholder="Enter text here..." name="body" required></textarea>
       
-      <button type="submit">Send Email</button>
-      <button id="cancel-button">Cancel</button>
+      <div id="popup-buttons">
+          <button type="submit">Send Email</button>
+          <button id="cancel-button">Cancel</button>
+      </div>
     </form>
 </div>
 <script src="/js/gallery.js"></script>

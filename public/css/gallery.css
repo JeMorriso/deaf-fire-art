@@ -1,16 +1,14 @@
 .gallery-container {
   display: grid;
-  grid-template-columns: auto auto auto auto;
-  grid-gap: 50px;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   max-width: 1200px;
+  grid-gap: 50px;
   margin: auto;
-  /* background: rgba(143, 143, 143, 0.5); */
-  /* height: 100%; */
-  /* display: flex; */
+  margin-top: 10%;
 }
 
 .gallery-image {
-    max-width: 400px;
+    /* min-width: 300px; */
     padding: 10px;
     background-color: white;
     color: black;
@@ -22,10 +20,18 @@
   color: black;
 }
 
-img {
+.card-top {
+  text-align: center;
+}
+
+.card-img-top {
     max-width: 100%;
     max-height: 100%;
     border-radius: 6px;
+}
+
+.card-text {
+  font-style: italic;
 }
 
 .transparent-button {
@@ -37,18 +43,29 @@ img {
   /* override default button font */
   font-family: 'Nunito', sans-serif;
   font-size: 1.5em;
-  display: block;
   transition: background-color .25s;
+  border-radius: 8px;
+  display: block;
+}
+.transparent-button:hover {
+  background-color: white;
+  color: #7f7f7f;
 }
 
 #delete-button, #cancel-delete {
   display: none;
 }
 
+#open-button-div {
+  max-width: 1200px;
+  margin: auto;
+}
+
 #open-button {
   position: fixed;
   bottom: 20px;
-  right: 20px;
+  right: 0px;
+  margin-right: 5%;
 }
 
 #email-popup {
@@ -60,10 +77,19 @@ img {
  background-color: white;
  color: #7f7f7f;
  padding: 20px;
+ border-radius: 8px;
 }
 
 #email-popup textarea, input {
   width: 100%;
+}
+
+#popup-buttons {
+  text-align: right;
+}
+
+.email-icon {
+  float: right;
 }
 
 .email-icon, .delete-image {

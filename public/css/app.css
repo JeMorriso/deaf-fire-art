@@ -1,14 +1,18 @@
 @import "uppload/dist/uppload.css";
 @import "uppload/dist/themes/light.css";
 
-html, body {
+html {
+  background-image: url("../img/firewood_1.jpg");
+  /* cover works well because it preserves aspect ratio. On smaller widths, the image height is defined by the container height (for this particular image). See CSS tips */
+  background-size: cover;
+}
+
+html {
   height: 100%;
+  margin: 0%;
 }
 
 body {
-    background-image: url("../img/firewood_1.jpg");
-    /* cover works well because it preserves aspect ratio. On smaller widths, the image height is defined by the container height (for this particular image). See CSS tips */
-    background-size: cover;
     color: white;
     font-family: 'Nunito', sans-serif;
 }
@@ -29,12 +33,12 @@ nav li {
   cursor: pointer;
 }
 
-a:hover {
+nav li a:hover {
   background-color: white;
   color: #7f7f7f;
 }
 
-a {
+nav li a {
   border-radius: 8px;
   padding: 4px;
   transition: background-color .25s;
