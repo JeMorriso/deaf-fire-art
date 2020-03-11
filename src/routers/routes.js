@@ -3,6 +3,7 @@ const path = require('path');
 const fs = require('fs');
 const sharp = require('sharp');
 const passport = require('passport');
+const nodemailer = require('nodemailer');
 
 const mongoose = require("mongoose");
 // these lines are needed to avoid deprecation warnings
@@ -10,6 +11,16 @@ mongoose.set('useNewUrlParser', true);
 mongoose.set('useUnifiedTopology', true);
 
 mongoose.connect("mongodb://localhost/tester");
+
+require('dotenv').config();
+
+const transporter = nodemailer.createTransport({
+  service: 'gmail',
+  auth: {
+    user: process.env.EMAIL,
+    pass: process.env.EMAIL_PASSWORD
+  }
+})
 
 const Admin = require('../js/admin');
 
@@ -148,6 +159,24 @@ router.post('/gallery/delete', (req, res) => {
       }); 
   });
   res.send({hello: 'gubna'}); 
+});
+
+router.post('/email', (req, res) => {
+  var mailOptions = {
+    from: req.body.email,
+    to: process.env.EMAIL,
+    subject: req.body.subject,
+    // gmail does not allow nodemailer to edit sender
+    text: "email from: " + req.body.email + "\n\n" + req.body.body
+  };
+  transporter.sendMail(mailOptions, function(error, info){
+    if (error) {
+      console.log(error);
+    } else {
+      console.log('Email sent: ' + info.response);
+    }
+  });
+  res.redirect('/gallery');
 });
 
 router.get('/about', (req, res) => {
