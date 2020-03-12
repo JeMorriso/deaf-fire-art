@@ -10,7 +10,7 @@ const mongoose = require("mongoose");
 mongoose.set('useNewUrlParser', true);
 mongoose.set('useUnifiedTopology', true);
 
-mongoose.connect("mongodb://localhost/tester");
+mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/tester");
 
 require('dotenv').config();
 
