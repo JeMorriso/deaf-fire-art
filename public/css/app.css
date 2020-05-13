@@ -33,12 +33,12 @@ nav li {
   cursor: pointer;
 }
 
-nav li a:hover {
+nav li a:hover, #add-new-image:hover {
   background-color: white;
   color: #7f7f7f;
 }
 
-nav li a {
+nav li a, #add-new-image {
   border-radius: 8px;
   padding: 4px;
   transition: background-color .25s;

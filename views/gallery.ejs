@@ -14,7 +14,7 @@
     </header>
 <!-- easiest way to use props from res.render is just inserting js here, instead of using a new js file -->
 <% if (isLoggedIn) { %>
-<a class="btn admin" href="/gallery/new">Add New Image</a>
+<a class="btn admin" id="add-new-image" href="/gallery/new">Add New Image</a>
 <% } %>
 <div class="gallery-container">
     <% gallery_images.forEach((image) => { %>
