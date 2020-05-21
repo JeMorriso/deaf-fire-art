@@ -39,13 +39,13 @@ router.get('/gallery', isLoggedIn, (req, res) => {
     console.log("logged in!");
   }
 
-  db.query("SELECT file_prefix, item_description, item_price FROM images", (err, results, fields) => {
+  db.query("SELECT id, file_prefix, item_description, item_price FROM images", (err, results, fields) => {
     if (err) {
       return console.log(err);
     }
     var gallery_images = [];
     results.forEach((row) => {
-      gallery_images.push({image_url_prefix: process.env.BUCKET_URL + row.file_prefix, item_description: row.item_description, item_price: row.item_price, file_prefix: row.file_prefix});
+      gallery_images.push({image_url_prefix: process.env.BUCKET_URL + row.file_prefix, id: row.id, item_description: row.item_description, item_price: row.item_price, file_prefix: row.file_prefix});
     });
     // // first parameter is the ejs file to be rendered - 2nd one is data being passed in (RHS) and what it's being named (LHS)
     res.render('gallery', {gallery_images: gallery_images, isLoggedIn: res.locals.isLoggedIn});
