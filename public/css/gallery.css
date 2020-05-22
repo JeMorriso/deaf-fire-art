@@ -8,16 +8,20 @@
 }
 
 .gallery-image {
-    /* min-width: 300px; */
-    padding: 10px;
-    background-color: white;
-    color: black;
-    border-radius: 8px;
+  /* min-width: 300px; */
+  padding: 10px;
+  background-color: white;
+  color: black;
+  border-radius: 8px;
 }
-
+/* 
 .galleryRow {
   margin: 20px;
   color: black;
+} */
+
+.card-admin {
+  margin-bottom: 1px;
 }
 
 .card-top {
@@ -25,13 +29,15 @@
 }
 
 .card-img-top {
-    max-width: 100%;
-    max-height: 100%;
-    border-radius: 6px;
+  max-width: 100%;
+  max-height: 100%;
+  border-radius: 6px;
 }
 
 .card-text {
   font-style: italic;
+  /* in case of no description */
+  min-width: 1px;
 }
 
 .transparent-button {
@@ -94,4 +100,23 @@
 
 .email-icon, .delete-image {
   cursor: pointer; 
+}
+
+.delete-image {
+  position: relative;
+  top: 2px;
+}
+
+.edit-image {
+  display: inline-block;
+  cursor: pointer;
+  color: white;
+  background-color: black;
+  /* remove default anchor tag underline */
+  text-decoration: none;
+  border-radius: 4px;
+  font-size: 0.8em;
+  /* height: 10px; */
+  /* anchor tags are inline, so doesn't work unless change display to inline block */
+  /* margin: 10px; */
 }

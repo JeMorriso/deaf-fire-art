@@ -13,32 +13,32 @@ require('@uppy/dashboard/dist/style.css')
 
 const uppy = Uppy({
   restrictions: {
-    // maxFileSize: 4000000,
-    allowedFileTypes: ['image/*']
+  // maxFileSize: 4000000,
+  allowedFileTypes: ['image/*']
   },
   // onBeforeUpload: (files) => {
   //   Object.keys(files).forEach(fileID => {
-  //     console.log(files[fileID].name)
+  //   console.log(files[fileID].name)
   //   })
-    // console.log("the files: " + files);
+  // console.log("the files: " + files);
   // }
 })
   .use(Dashboard, {
-    trigger: '#select-files',
-    // inline: true,
-    // height: 300,
-    metaFields: [
-      { id: 'item-description', name: 'Item description', placeholder: 'description'},
-      { id: 'item-price', name: 'Item price', placeholder: 'price'}
-    ],
+  trigger: '#select-files',
+  // inline: true,
+  // height: 300,
+  metaFields: [
+    { id: 'item-description', name: 'Item description', placeholder: 'description'},
+    { id: 'item-price', name: 'Item price', placeholder: 'price'}
+  ],
   })
   .use(XHRUpload, {
-    // needs to be set to false for metadata to get sent
-    // bundle: true, 
-    endpoint: '/gallery',
-    method: 'post',
-    formData: true,
-    fieldName: 'files'
+  // needs to be set to false for metadata to get sent
+  // bundle: true, 
+  endpoint: '/gallery',
+  method: 'post',
+  formData: true,
+  fieldName: 'files'
   })
 
 uppy.on('complete', (result) => {
