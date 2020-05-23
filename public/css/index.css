@@ -1,5 +1,5 @@
 .splash {
-  font-family: 'Kaushan Script', cursive;
+  font-family: "Kaushan Script", cursive;
   display: flex;
   flex-direction: column;
   height: 100%;
@@ -20,7 +20,7 @@
   animation: fadein 2s;
 
   /* text-transform: uppercase; */
-  font-size: 40px;  
+  font-size: 40px;
   text-align: left;
   /* flex: 1; */
 }
@@ -45,11 +45,11 @@
 }
 
 @keyframes fadein {
-0% {
-  opacity: 0;
-}
+  0% {
+    opacity: 0;
+  }
 
-100% {
-  opacity: 1;
-}
+  100% {
+    opacity: 1;
+  }
 }

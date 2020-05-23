@@ -4,13 +4,7 @@
 </head>
 <body>
   <header>
-    <nav>
-      <ul>
-        <li><a href="/">Home</a></li>
-        <li><a href="/gallery">Gallery</a></li>
-        <li><a href="/about">About</a></li>
-      </ul>
-    </nav>
+    <%- include("partials/navbar") %>
   </header>
 <!-- easiest way to use props from res.render is just inserting js here, instead of using a new js file -->
 <% if (isLoggedIn) { %>

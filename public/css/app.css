@@ -14,10 +14,11 @@ html {
 
 body {
   color: white;
-  font-family: 'Nunito', sans-serif;
+  font-family: "Nunito", sans-serif;
 }
 
-header, .content {
+header,
+.content {
   max-width: 1200px;
   margin: auto;
 }
@@ -27,21 +28,23 @@ nav {
   margin-right: 5%;
 }
 
-nav li { 
+nav li {
   /* want nav items to be horizontal, but allow for top and bottom spacing, + width and height */
   display: inline-block;
   cursor: pointer;
 }
 
-nav li a:hover, #add-new-image:hover {
+nav li a:hover,
+#add-new-image:hover {
   background-color: white;
   color: #7f7f7f;
 }
 
-nav li a, #add-new-image {
+nav li a,
+#add-new-image {
   border-radius: 8px;
   padding: 4px;
-  transition: background-color .25s;
+  transition: background-color 0.25s;
   /* using em here so that font size dynamically changes with browser font size */
   font-size: 1.5em;
   color: white;
@@ -49,6 +52,6 @@ nav li a, #add-new-image {
 }
 
 ul {
-  /* font-family: 'Nunito', sans-serif; */ 
+  /* font-family: 'Nunito', sans-serif; */
   list-style: none;
 }

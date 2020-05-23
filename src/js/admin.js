@@ -1,9 +1,9 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 const passportLocalMongoose = require("passport-local-mongoose");
 
 const AdminSchema = new mongoose.Schema({
   username: String,
-  password: String
+  password: String,
 });
 
 // add methods defined in passport-local-mongoose to AdminSchema
