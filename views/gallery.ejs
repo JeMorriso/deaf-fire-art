@@ -1,11 +1,12 @@
-<%- include("partials/header") %>
-<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/all.min.css" rel="stylesheet">
-<link rel="stylesheet" href="/css/gallery.css">
+  <%- include("partials/header") %>
+  <link href="/css/lightbox.min.css" rel="stylesheet" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/all.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="/css/gallery.css">
 </head>
 <body>
-  <header>
-    <%- include("partials/navbar") %>
-  </header>
+<header>
+  <%- include("partials/navbar") %>
+</header>
 <!-- easiest way to use props from res.render is just inserting js here, instead of using a new js file -->
 <% if (isLoggedIn) { %>
 <a class="btn admin" id="add-new-image" href="/gallery/new">Add New Image</a>
