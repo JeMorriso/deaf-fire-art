@@ -4,59 +4,61 @@
   <link rel="stylesheet" href="/css/gallery.css">
 </head>
 <body>
-<header>
-  <%- include("partials/navbar") %>
-</header>
-<!-- easiest way to use props from res.render is just inserting js here, instead of using a new js file -->
-<% if (isLoggedIn) { %>
-<a class="btn admin" id="add-new-image" href="/gallery/new">Add New Image</a>
-<% } %>
-<div class="gallery-container">
-  <% gallery_images.forEach((image) => { %>
-  <div class="gallery-image col-3" data-filename="<%= image.file_prefix%>">
-    <% if (isLoggedIn) { %>
-    <div class="card-admin">
-      <i class="fas fa-window-close delete-image"></i>
-      <a class="edit-image" href="">Edit</a>
-    </div>
-    <% } %>
-    <div class="card">
-      <div class="card-top">
-        <a href="<%=image.image_url_prefix + '-big.jpg'%>"
-          data-lightbox="image-1" 
-          data-title="<%=image.item_description%>" 
-          data-alt="<%=image.item_description%>" 
-          data-id="<%=image.id%>">
-          <img class="card-img-top" 
-            src="<%=image.image_url_prefix + '-small.jpg'%>"
-          >
-        </a>
+<div class="container">
+  <header>
+    <%- include("partials/navbar") %>
+  </header>
+  <!-- easiest way to use props from res.render is just inserting js here, instead of using a new js file -->
+  <% if (isLoggedIn) { %>
+  <a class="btn admin" id="add-new-image" href="/gallery/new">Add New Image</a>
+  <% } %>
+  <div class="gallery-container">
+    <% gallery_images.forEach((image) => { %>
+    <div class="gallery-image col-3" data-filename="<%= image.file_prefix%>">
+      <% if (isLoggedIn) { %>
+      <div class="card-admin">
+        <i class="fas fa-window-close delete-image"></i>
+        <a class="edit-image" href="">Edit</a>
       </div>
-      <div class="card-body">
-        <div class="card-text">
-          <% if (image.item_description !== null) { %>
-            <%=image.item_description%>
-          <% } else { %>
-          <br>
-          <% } %>
+      <% } %>
+      <div class="card">
+        <div class="card-top">
+          <a href="<%=image.image_url_prefix + '-big.jpg'%>"
+            data-lightbox="image-1" 
+            data-title="<%=image.item_description%>" 
+            data-alt="<%=image.item_description%>" 
+            data-id="<%=image.id%>">
+            <img class="card-img-top" 
+              src="<%=image.image_url_prefix + '-small.jpg'%>"
+            >
+          </a>
         </div>
-        <div>
-          <% if (image.item_price !== null) { %>
-            $<%=image.item_price%>
-          <% } %>
-          <i class="fas fa-envelope email-icon"></i>
-        </div>
-      </div> 
+        <div class="card-body">
+          <div class="card-text">
+            <% if (image.item_description !== null) { %>
+              <%=image.item_description%>
+            <% } else { %>
+            <br>
+            <% } %>
+          </div>
+          <div>
+            <% if (image.item_price !== null) { %>
+              $<%=image.item_price%>
+            <% } %>
+            <i class="fas fa-envelope email-icon"></i>
+          </div>
+        </div> 
+      </div>
     </div>
+    <% }); %>
   </div>
-  <% }); %>
-</div>
-<% if (isLoggedIn) { %>
-<button id="delete-button">Delete Images</button>
-<button id="cancel-delete">Cancel</button>
-<% } %>
-<div id="open-button-div">
-<button id="open-button" class="transparent-button">Email Sandy</button>
+  <% if (isLoggedIn) { %>
+  <button id="delete-button">Delete Images</button>
+  <button id="cancel-delete">Cancel</button>
+  <% } %>
+  <div id="open-button-div">
+  <button id="open-button" class="transparent-button">Email Sandy</button>
+  </div>
 </div>
 <div id="email-popup">
   <!-- not sure what route I should use -->
