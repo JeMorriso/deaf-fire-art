@@ -49,7 +49,7 @@
     "babel-plugin-syntax-dynamic-import": "^6.18.0",
     "clean-css": "^4.2.1",
     "css-loader": "^3.4.2",
-    "eslint": "^6.8.0",
+    "eslint": "^7.1.0",
     "eslint-config-airbnb-base": "^14.1.0",
     "eslint-config-node": "^4.0.0",
     "eslint-config-prettier": "^6.11.0",
