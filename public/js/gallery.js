@@ -1,5 +1,5 @@
 // check if the user is logged in
-isLoggedIn = false;
+let isLoggedIn = false;
 if (document.getElementsByClassName('admin').length > 0) {
   isLoggedIn = true;
 }
@@ -18,60 +18,69 @@ document.getElementById('cancel-button').addEventListener('click', () => {
 });
 
 // Email image icon event listeners
-var imageIcons = document.getElementsByClassName('email-icon');
-var toggle = 'block';
+const emailIcons = document.getElementsByClassName('card-email');
+// let toggle = 'block';
 
-for (let i = 0; i < imageIcons.length; i++) {
-  imageIcons[i].addEventListener('click', function () {
-    var itemDescription =
-      imageIcons[i].parentElement.previousElementSibling.innerText;
-    document.getElementById('email-popup').style.display = toggle;
-    toggle = toggle === 'block' ? 'none' : 'block';
+for (let i = 0; i < emailIcons.length; i++) {
+  emailIcons[i].addEventListener('click', function () {
+    const itemDescription =
+      emailIcons[i].parentElement.previousElementSibling.innerText;
     document.getElementById('email-subject').value = itemDescription;
+
+    // Not correct! style.display only get style that has been defined inline using style attribute
+    // const popupDisplay = document.getElementById('email-popup').style.display;
+
+    // Retrieves all styles, including those defined in CSS
+    const popupDisplay = window.getComputedStyle(
+      document.getElementById('email-popup'),
+    ).style.display;
+    // Creates inline style
+    document.getElementById('email-popup').style.display =
+      popupDisplay === 'block' ? 'none' : 'block';
   });
 }
 
 // Admin event listeners
 if (isLoggedIn) {
-  var deleteIcons = document.getElementsByClassName('delete-image');
+  const deleteIcons = document.getElementsByClassName('card-delete');
 
   for (let i = 0; i < deleteIcons.length; i++) {
     deleteIcons[i].addEventListener('click', () => {
-      if (
-        window
-          .getComputedStyle(document.getElementById('delete-button'))
-          .getPropertyValue('display') === 'none'
-      ) {
-        document.getElementById('delete-button').style.display = 'inline-block';
-      }
-      if (
-        window
-          .getComputedStyle(document.getElementById('cancel-delete'))
-          .getPropertyValue('display') === 'none'
-      ) {
-        document.getElementById('cancel-delete').style.display = 'inline-block';
-      }
+      // show the 'delete' and 'cancel' buttons if they aren't already showing
+      const deleteDisplay = window.getComputedStyle(
+        document.getElementById('delete-btn'),
+      ).style.display;
+      document.getElementById('delete-btn').style.display =
+        deleteDisplay === 'inline-block' ? 'none' : 'inline-block';
+
+      const cancelDisplay = window.getComputedStyle(
+        document.getElementById('cancel-btn'),
+      ).style.display;
+      document.getElementById('cancel-btn').style.display =
+        cancelDisplay === 'inline-block' ? 'none' : 'inline-block';
+
+      // Hide the image
       deleteIcons[i].parentElement.parentElement.style.display = 'none';
     });
   }
 
-  document.getElementById('cancel-delete').addEventListener('click', () => {
-    var galleryImages = document.getElementsByClassName('gallery-image');
+  document.getElementById('cancel-btn').addEventListener('click', () => {
+    const galleryImages = document.getElementsByClassName('gallery-image');
     for (let i = 0; i < galleryImages.length; i++) {
       galleryImages[i].style.display = 'block';
     }
   });
 
-  document.getElementById('delete-button').addEventListener('click', () => {
+  document.getElementById('delete-btn').addEventListener('click', () => {
     // stores all the files that are to be deleted on the backend
-    const data = [];
+    const files = [];
 
-    var galleryImages = document.getElementsByClassName('gallery-image');
+    const galleryImages = document.getElementsByClassName('gallery-image');
     for (let i = 0; i < galleryImages.length; i++) {
       // if display is set to none, add file name to be deleted on backend
       if (galleryImages[i].style.display === 'none') {
-        data.push(galleryImages[i].dataset.filename);
-        console.log(data);
+        files.push(galleryImages[i].dataset.filename);
+        console.log(files);
       }
     }
 
@@ -80,14 +89,13 @@ if (isLoggedIn) {
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify(data),
+      body: JSON.stringify(files),
     })
       .then((res) => {
         return res.json();
       })
       .then((data) => {
         console.log('Success:', data);
-        //alert("Images successfully deleted!")
       })
       .catch((error) => {
         console.error('Error:', error);
