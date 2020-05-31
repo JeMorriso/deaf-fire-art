@@ -1,31 +1,63 @@
-@import "uppload/dist/uppload.css";
-@import "uppload/dist/themes/light.css";
+* {
+  margin: 0;
+  padding: 0;
+}
 
 html {
   background-image: url("../img/firewood_1.jpg");
   /* cover works well because it preserves aspect ratio. On smaller widths, the image height is defined by the container height (for this particular image). See CSS tips */
   background-size: cover;
-}
-
-html {
+  background-attachment: fixed;
   height: 100%;
   margin: 0%;
 }
 
 body {
   color: white;
-  font-family: "Nunito", sans-serif;
+  font-family: 'Nunito', sans-serif;
 }
 
-header,
-.content {
+.container {
   max-width: 1200px;
   margin: auto;
+  padding: 0 1rem;
+}
+
+div.container {
+  height: 100vh;
+}
+
+footer.container {
+  position: -webkit-sticky;
+  position: sticky;
+  bottom: 0px;
+  text-align: right;
+}
+
+h1 {
+  font-family: 'Kaushan Script', cursive;
+  margin-top: 10%;
+}
+
+p {
+  font-size: 1.2rem;
 }
 
 nav {
-  text-align: right;
-  margin-right: 5%;
+  position: -webkit-sticky;
+  position: sticky;
+  top: 0px;
+  padding-top: 1rem;
+}
+
+nav ul {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: end;
+      -ms-flex-pack: end;
+          justify-content: flex-end;
+  list-style: none;
 }
 
 nav li {
@@ -34,24 +66,402 @@ nav li {
   cursor: pointer;
 }
 
-nav li a:hover,
-#add-new-image:hover {
+@media (max-width: 333px) {
+  nav ul {
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+  }
+}
+
+.grid {
+  display: -ms-grid;
+  display: grid;
+  /* fr = fraction of available space */
+  /* fr is better than percentages because no margin or padding issues */
+  /* minmax defines size range between 300px and 1fr */
+  /* basically this just means that the item has flexible width but minimum of 300px */
+  /* https://css-tricks.com/auto-sizing-columns-css-grid-auto-fill-vs-auto-fit/ */
+  -ms-grid-columns: (minmax(300px, 1fr))[auto-fill];
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  justify-items: center;
+  max-width: 1200px;
+  gap: 50px;
+  margin: auto;
+  margin-top: 10%;
+}
+
+#splash-container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+#splash {
+  font-family: 'Kaushan Script', cursive;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  margin: 15%;
+}
+
+#welcome-1 {
+  -webkit-animation: fadein 2s;
+  /* Safari, Chrome and Opera > 12.1 */
+  /* Firefox < 16 */
+  /* Internet Explorer */
+  /* Opera < 12.1 */
+  animation: fadein 2s;
+  font-size: 40px;
+}
+
+#welcome-2 {
+  -webkit-animation: fadein 4s;
+  /* Safari, Chrome and Opera > 12.1 */
+  /* Firefox < 16 */
+  /* Internet Explorer */
+  /* Opera < 12.1 */
+  animation: fadein 4s;
+  -webkit-animation-delay: 1s;
+  /* Safari, Chrome */
+  animation-delay: 1s;
+  opacity: 0;
+  /* so that opacity stays 1 after fadein complete */
+  -webkit-animation-fill-mode: forwards;
+          animation-fill-mode: forwards;
+  text-transform: uppercase;
+  font-size: 70px;
+}
+
+@-webkit-keyframes fadein {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes fadein {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.ui-btn, .card-edit {
+  /* override default button font */
+  font-family: 'Nunito', sans-serif;
+  text-decoration: none;
+  cursor: pointer;
+  color: white;
+}
+
+.ui-btn {
+  border-radius: 8px;
+  font-size: 1.5rem;
+  padding: 4px;
+  -webkit-transition: background-color 0.25s;
+  transition: background-color 0.25s;
+}
+
+.ui-btn:hover {
   background-color: white;
   color: #7f7f7f;
 }
 
-nav li a,
-#add-new-image {
-  border-radius: 8px;
-  padding: 4px;
-  transition: background-color 0.25s;
-  /* using em here so that font size dynamically changes with browser font size */
-  font-size: 1.5em;
-  color: white;
-  text-decoration: none;
+button.ui-btn {
+  background-color: transparent;
+  border: none;
+  outline: none;
 }
 
-ul {
-  /* font-family: 'Nunito', sans-serif; */
-  list-style: none;
+#email-form .ui-btn {
+  color: #7f7f7f;
+}
+
+#email-form .ui-btn:hover {
+  background-color: #7f7f7f;
+  color: white;
+}
+
+.card-edit {
+  border-radius: 4px;
+  font-size: 0.8rem;
+  padding: 4px;
+  background-color: black;
+}
+
+#delete-btn,
+#cancel-btn {
+  display: none;
+}
+
+#email-open {
+  margin-bottom: 1rem;
+}
+
+.card {
+  padding: 10px;
+  background-color: white;
+  color: black;
+  border-radius: 8px;
+}
+
+.card-admin {
+  margin-bottom: 10px;
+  padding: 0 2px;
+}
+
+.card-admin * {
+  cursor: pointer;
+}
+
+.card-admin i {
+  position: relative;
+  top: 3px;
+}
+
+.card-img-top {
+  /* if width and height are not 100%, then grid gaps fail to work properly */
+  width: 100%;
+  height: 100%;
+  border-radius: 6px;
+}
+
+.card-body {
+  padding: 2px;
+}
+
+.card-text {
+  font-style: italic;
+}
+
+.card-email, .card-edit {
+  float: right;
+  cursor: pointer;
+}
+
+#email-popup {
+  max-width: 400px;
+  display: none;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  background-color: white;
+  color: #7f7f7f;
+  padding: 20px;
+  border-radius: 8px;
+}
+
+#email-popup textarea,
+#email-popup input {
+  width: 100%;
+}
+
+#email-popup div {
+  text-align: right;
+}
+
+.lb-loader,
+.lightbox {
+  text-align: center;
+  line-height: 0;
+  position: absolute;
+  left: 0;
+}
+
+body.lb-disable-scrolling {
+  overflow: hidden;
+}
+
+.lightboxOverlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 9999;
+  background-color: #000;
+  filter: alpha(Opacity=80);
+  opacity: 0.8;
+  display: none;
+}
+
+.lightbox {
+  width: 100%;
+  z-index: 10000;
+  font-weight: 400;
+  outline: 0;
+}
+
+.lightbox .lb-image {
+  display: block;
+  height: auto;
+  max-width: inherit;
+  max-height: none;
+  border-radius: 3px;
+  border: 4px solid #fff;
+}
+
+.lightbox a img {
+  border: none;
+}
+
+.lb-outerContainer {
+  position: relative;
+  width: 250px;
+  height: 250px;
+  margin: 0 auto;
+  border-radius: 4px;
+  background-color: #fff;
+}
+
+.lb-outerContainer:after {
+  content: '';
+  display: table;
+  clear: both;
+}
+
+.lb-loader {
+  top: 43%;
+  height: 25%;
+  width: 100%;
+}
+
+.lb-cancel {
+  display: block;
+  width: 32px;
+  height: 32px;
+  margin: 0 auto;
+  background: url(../img/loading.gif) no-repeat;
+}
+
+.lb-nav {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  z-index: 10;
+}
+
+.lb-container > .nav {
+  left: 0;
+}
+
+.lb-nav a {
+  outline: 0;
+  background-image: url(data:image/gif;base64,R0lGODlhAQABAPAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==);
+}
+
+.lb-next,
+.lb-prev {
+  height: 100%;
+  cursor: pointer;
+  display: block;
+}
+
+.lb-nav a.lb-prev {
+  width: 34%;
+  left: 0;
+  float: left;
+  background: url(../img/prev.png) left 48% no-repeat;
+  filter: alpha(Opacity=0);
+  opacity: 0;
+  -webkit-transition: opacity 0.6s;
+  transition: opacity 0.6s;
+}
+
+.lb-nav a.lb-prev:hover {
+  filter: alpha(Opacity=100);
+  opacity: 1;
+}
+
+.lb-nav a.lb-next {
+  width: 64%;
+  right: 0;
+  float: right;
+  background: url(../img/next.png) right 48% no-repeat;
+  filter: alpha(Opacity=0);
+  opacity: 0;
+  -webkit-transition: opacity 0.6s;
+  transition: opacity 0.6s;
+}
+
+.lb-nav a.lb-next:hover {
+  filter: alpha(Opacity=100);
+  opacity: 1;
+}
+
+.lb-dataContainer {
+  margin: 0 auto;
+  padding-top: 5px;
+  width: 100%;
+  border-bottom-left-radius: 4px;
+  border-bottom-right-radius: 4px;
+}
+
+.lb-dataContainer:after {
+  content: '';
+  display: table;
+  clear: both;
+}
+
+.lb-data {
+  padding: 0 4px;
+  color: #ccc;
+}
+
+.lb-data .lb-details {
+  width: 85%;
+  float: left;
+  text-align: left;
+  line-height: 1.1em;
+}
+
+.lb-data .lb-caption {
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1em;
+}
+
+.lb-data .lb-caption a {
+  color: #4ae;
+}
+
+.lb-data .lb-number {
+  display: block;
+  clear: left;
+  padding-bottom: 1em;
+  font-size: 12px;
+  color: #999;
+}
+
+.lb-data .lb-close {
+  display: block;
+  float: right;
+  width: 30px;
+  height: 30px;
+  background: url(../img/close.png) top right no-repeat;
+  text-align: right;
+  outline: 0;
+  filter: alpha(Opacity=70);
+  opacity: 0.7;
+  -webkit-transition: opacity 0.2s;
+  transition: opacity 0.2s;
+}
+
+.lb-data .lb-close:hover {
+  cursor: pointer;
+  filter: alpha(Opacity=100);
+  opacity: 1;
 }
