@@ -1,15 +1,15 @@
-<%- include("partials/header") %>
-</head>
-<body>
-<div class="container">
-  <header>
-    <%- include("partials/navbar") %>
-  </header>
-  <h1>Login Page</h1>
-  <form action="/login" method="POST">
-    <input type="text" name="username" placeholder="username">
-    <input type="password" name="password" placeholder="password">
-    <button>Submit</button>
-  </form>
-</div>
-<%- include("partials/footer") %>
+<!DOCTYPE html>
+<html>
+  <%- include("partials/header") %>
+  <body>
+    <div class="container">
+      <%- include("partials/navbar") %>
+      <h1>Login</h1>
+      <form action="/login" method="POST">
+        <input type="text" name="username" placeholder="username" />
+        <input type="password" name="password" placeholder="password" />
+        <button class="ui-btn">Submit</button>
+      </form>
+    </div>
+  </body>
+</html>

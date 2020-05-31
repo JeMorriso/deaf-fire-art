@@ -1,90 +1,112 @@
+<!DOCTYPE html>
+<html>
   <%- include("partials/header") %>
-  <link href="/css/lightbox.min.css" rel="stylesheet" />
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/all.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="/css/gallery.css">
-</head>
-<body>
-<div class="container">
-  <header>
-    <%- include("partials/navbar") %>
-  </header>
-  <!-- easiest way to use props from res.render is just inserting js here, instead of using a new js file -->
-  <% if (isLoggedIn) { %>
-  <a class="btn admin" id="add-new-image" href="/gallery/new">Add New Image</a>
-  <% } %>
-  <div class="gallery-container">
-    <% gallery_images.forEach((image) => { %>
-    <div class="gallery-image col-3" data-filename="<%= image.file_prefix%>">
+  <body>
+    <div class="container">
+      <%- include("partials/navbar") %>
+      <!-- easiest way to use props from res.render is just inserting js here, instead of using a new js file -->
       <% if (isLoggedIn) { %>
-      <div class="card-admin">
-        <i class="fas fa-window-close delete-image"></i>
-        <a class="edit-image" href="">Edit</a>
-      </div>
+      <a class="ui-btn btn admin" id="add-new-image" href="/gallery/new"
+        >Add New Image</a
+      >
       <% } %>
-      <div class="card">
-        <div class="card-top">
-          <a href="<%=image.image_url_prefix + '-big.jpg'%>"
-            data-lightbox="image-1" 
-            data-title="<%=image.item_description%>" 
-            data-alt="<%=image.item_description%>" 
-            data-id="<%=image.id%>">
-            <img class="card-img-top" 
-              src="<%=image.image_url_prefix + '-small.jpg'%>"
-            >
-          </a>
+      <div class="grid-wrapper">
+        <div class="grid">
+          <% gallery_images.forEach((image, i) => { %>
+          <div class="card col-3" data-filename="<%= image.file_prefix%>">
+            <% if (isLoggedIn) { %>
+            <div class="card-admin">
+              <i class="fas fa-window-close card-delete"></i>
+              <a class="card-edit" href="">Edit</a>
+            </div>
+            <% } %>
+            <div class="card-top">
+              <!-- arrows don't appear on images in lightbox if use unique values for data-lightbox like docs specify. -->
+              <a
+                href="<%=image.image_url_prefix + '-big.jpg'%>"
+                data-lightbox="image-1"
+                data-title="<%=image.item_description%>"
+                data-alt="<%=image.item_description%>"
+                data-id="<%=image.id%>"
+              >
+                <img
+                  class="card-img-top"
+                  src="<%=image.image_url_prefix + '-small.jpg'%>"
+                />
+              </a>
+            </div>
+            <div class="card-body">
+              <div class="card-text">
+                <% if (image.item_description !== null) { %>
+                <%=image.item_description%> <% } else { %>
+                <br />
+                <% } %>
+              </div>
+              <div>
+                <% if (image.item_price !== null) { %> $<%=image.item_price%> <%
+                } %>
+                <i class="fas fa-envelope card-email"></i>
+              </div>
+            </div>
+          </div>
+          <% }); %>
         </div>
-        <div class="card-body">
-          <div class="card-text">
-            <% if (image.item_description !== null) { %>
-              <%=image.item_description%>
-            <% } else { %>
-            <br>
-            <% } %>
-          </div>
-          <div>
-            <% if (image.item_price !== null) { %>
-              $<%=image.item_price%>
-            <% } %>
-            <i class="fas fa-envelope email-icon"></i>
-          </div>
-        </div> 
       </div>
+      <% if (isLoggedIn) { %>
+      <button id="delete-btn" class="ui-btn" type="button">
+        Delete Images
+      </button>
+      <button id="cancel-btn" class="ui-btn" type="button">Cancel</button>
+      <% } %>
     </div>
-    <% }); %>
-  </div>
-  <% if (isLoggedIn) { %>
-  <button id="delete-button">Delete Images</button>
-  <button id="cancel-delete">Cancel</button>
-  <% } %>
-  <div id="open-button-div">
-  <button id="open-button" class="transparent-button">Email Sandy</button>
-  </div>
-</div>
-<div id="email-popup">
-  <!-- not sure what route I should use -->
-  <form action="/email" method="POST" id="email-form">
-    <h1>Email Sandy</h1>
-  
-    <label for="email"><b>Email</b></label>
-    <input id="email-address" type="email" placeholder="Your Email" name="email" required>
-  
-    <label for="subject"><b>Subject</b></label>
-    <input id="email-subject" type="text" placeholder="Subject" name="subject" required>
-    
-    <label for="body"><b>Body</b></label>
-    <textarea id="email-body" placeholder="Enter text here..." name="body" required></textarea>
-    
-    <div id="popup-buttons">
-      <button type="submit">Send Email</button>
-      <button id="cancel-button">Cancel</button>
-    </div>
-  </form>
-</div>
-<script src="/js/gallery.js"></script>
-<script src="/dist/lightbox-plus-jquery.min.js"></script>
-<script>
-  lightbox.option({
-    'showImageNumberLabel': false
-  })
-</script>
-<%- include("partials/footer") %>
+    <footer class="container">
+      <button id="email-open" class="ui-btn" type="button">Email Sandy</button>
+      <div id="email-popup">
+        <!-- not sure what route I should use -->
+        <form action="/email" method="POST" id="email-form">
+          <h1>Email Sandy</h1>
+
+          <label for="email"><b>Email</b></label>
+          <input
+            id="email-address"
+            type="email"
+            placeholder="Your Email"
+            name="email"
+            required
+          />
+
+          <label for="subject"><b>Subject</b></label>
+          <input
+            id="email-subject"
+            type="text"
+            placeholder="Subject"
+            name="subject"
+            required
+          />
+
+          <label for="body"><b>Body</b></label>
+          <textarea
+            id="email-body"
+            placeholder="Enter text here..."
+            name="body"
+            required
+          ></textarea>
+
+          <div>
+            <button class="ui-btn" type="submit">Send Email</button>
+            <button class="ui-btn" id="email-cancel" type="button">
+              Cancel
+            </button>
+          </div>
+        </form>
+      </div>
+    </footer>
+    <script src="/js/gallery.js"></script>
+    <script src="/dist/lightbox-plus-jquery.min.js"></script>
+    <script>
+      lightbox.option({
+        showImageNumberLabel: false,
+      });
+    </script>
+  </body>
+</html>
