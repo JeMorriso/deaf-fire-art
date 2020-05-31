@@ -1,20 +1,21 @@
 // check if the user is logged in
+// TODO: use AJAX call instead
 let isLoggedIn = false;
 if (document.getElementsByClassName('admin').length > 0) {
   isLoggedIn = true;
 }
 
 // Email form event listeners
-document.getElementById('open-button').addEventListener('click', () => {
+document.getElementById('email-open').addEventListener('click', () => {
   document.getElementById('email-popup').style.display = 'block';
 });
 
-document.getElementById('cancel-button').addEventListener('click', () => {
-  document.getElementById('email-popup').style.display = 'none';
+document.getElementById('email-cancel').addEventListener('click', () => {
   // clear text
   document.getElementById('email-address').value = '';
   document.getElementById('email-subject').value = '';
   document.getElementById('email-body').value = '';
+  document.getElementById('email-popup').style.display = 'none';
 });
 
 // Email image icon event listeners
@@ -33,8 +34,7 @@ for (let i = 0; i < emailIcons.length; i++) {
     // Retrieves all styles, including those defined in CSS
     const popupDisplay = window.getComputedStyle(
       document.getElementById('email-popup'),
-    ).style.display;
-    // Creates inline style
+    ).display;
     document.getElementById('email-popup').style.display =
       popupDisplay === 'block' ? 'none' : 'block';
   });
@@ -47,17 +47,17 @@ if (isLoggedIn) {
   for (let i = 0; i < deleteIcons.length; i++) {
     deleteIcons[i].addEventListener('click', () => {
       // show the 'delete' and 'cancel' buttons if they aren't already showing
-      const deleteDisplay = window.getComputedStyle(
-        document.getElementById('delete-btn'),
-      ).style.display;
-      document.getElementById('delete-btn').style.display =
-        deleteDisplay === 'inline-block' ? 'none' : 'inline-block';
+      // const deleteDisplay = window.getComputedStyle(
+      //   document.getElementById('delete-btn'),
+      // ).display;
+      document.getElementById('delete-btn').style.display = 'inline-block';
+      // deleteDisplay === 'inline-block' ? 'none' : 'inline-block';
 
-      const cancelDisplay = window.getComputedStyle(
-        document.getElementById('cancel-btn'),
-      ).style.display;
-      document.getElementById('cancel-btn').style.display =
-        cancelDisplay === 'inline-block' ? 'none' : 'inline-block';
+      // const cancelDisplay = window.getComputedStyle(
+      //   document.getElementById('cancel-btn'),
+      // ).display;
+      document.getElementById('cancel-btn').style.display = 'inline-block';
+      // cancelDisplay === 'inline-block' ? 'none' : 'inline-block';
 
       // Hide the image
       deleteIcons[i].parentElement.parentElement.style.display = 'none';
@@ -65,17 +65,21 @@ if (isLoggedIn) {
   }
 
   document.getElementById('cancel-btn').addEventListener('click', () => {
-    const galleryImages = document.getElementsByClassName('gallery-image');
+    const galleryImages = document.getElementsByClassName('card');
     for (let i = 0; i < galleryImages.length; i++) {
       galleryImages[i].style.display = 'block';
     }
+
+    // Hide delete / cancel buttons
+    document.getElementById('delete-btn').style.display = 'none';
+    document.getElementById('cancel-btn').style.display = 'none';
   });
 
   document.getElementById('delete-btn').addEventListener('click', () => {
     // stores all the files that are to be deleted on the backend
     const files = [];
 
-    const galleryImages = document.getElementsByClassName('gallery-image');
+    const galleryImages = document.getElementsByClassName('card');
     for (let i = 0; i < galleryImages.length; i++) {
       // if display is set to none, add file name to be deleted on backend
       if (galleryImages[i].style.display === 'none') {
