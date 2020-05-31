@@ -1,0 +1,13 @@
+@mixin fadein($seconds) {
+  -webkit-animation: fadein #{$seconds}s; /* Safari, Chrome and Opera > 12.1 */
+  -moz-animation: fadein #{$seconds}s; /* Firefox < 16 */
+  -ms-animation: fadein #{$seconds}s; /* Internet Explorer */
+  -o-animation: fadein #{$seconds}s; /* Opera < 12.1 */
+  animation: fadein #{$seconds}s;
+}
+
+@mixin button($border-radius, $font-size, $padding) {
+  border-radius: $border-radius;
+  font-size: $font-size;
+  padding: $padding;
+}

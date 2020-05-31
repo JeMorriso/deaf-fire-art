@@ -1,0 +1,52 @@
+%btn {
+  /* override default button font */
+  font-family: 'Nunito', sans-serif;
+  text-decoration: none;
+  // default for anchor, but make explicit anyways
+  cursor: pointer;
+
+  color: $base-color;
+}
+
+.ui-btn {
+  @extend %btn;
+  @include button(8px, 1.5rem, 4px);
+
+  transition: background-color 0.25s;
+
+  &:hover {
+    background-color: $base-color;
+    color: $secondary-color;
+  }
+}
+
+button.ui-btn {
+  background-color: transparent;
+  border: none;
+  outline: none;
+}
+
+#email-form .ui-btn {
+  color: $secondary-color;
+
+  &:hover {
+    background-color: $secondary-color;
+    color: $base-color;
+  }
+}
+
+.card-edit {
+  @extend %btn;
+  @include button(4px, 0.8rem, 4px);
+
+  background-color: black;
+}
+
+#delete-btn,
+#cancel-btn {
+  display: none;
+}
+
+#email-open {
+  margin-bottom: 1rem;
+}

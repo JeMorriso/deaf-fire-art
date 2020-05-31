@@ -1,0 +1,44 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  background-image: url('../img/firewood_1.jpg');
+  /* cover works well because it preserves aspect ratio. On smaller widths, the image height is defined by the container height (for this particular image). See CSS tips */
+  background-size: cover;
+  background-attachment: fixed;
+  height: 100%;
+  margin: 0%;
+}
+
+body {
+  color: $base-color;
+  font-family: 'Nunito', sans-serif;
+}
+
+.container {
+  max-width: 1200px;
+  margin: auto;
+  padding: 0 1rem;
+}
+
+div.container {
+  height: 100vh;
+}
+
+footer.container {
+  position: sticky;
+  bottom: 0px;
+  text-align: right;
+  // padding-bottom: 1rem;
+}
+
+h1 {
+  font-family: 'Kaushan Script', cursive;
+  margin-top: 10%;
+}
+
+p {
+  font-size: 1.2rem;
+}
