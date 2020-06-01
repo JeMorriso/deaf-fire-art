@@ -2,7 +2,6 @@
 const Uppy = require('@uppy/core');
 const XHRUpload = require('@uppy/xhr-upload');
 const Dashboard = require('@uppy/dashboard');
-//const Form = require('@uppy/form')
 
 // And their styles (for UI plugins)
 require('@uppy/core/dist/style.css');
@@ -38,9 +37,8 @@ const uppy = Uppy({
 
 uppy.on('complete', (result) => {
   // redirect from frontend due to AJAX
-  //window.location.assign("/gallery");
   console.log(
-    'Upload complete! We’ve uploaded these files:',
-    result.successful
+    'Upload complete! We’ve uploaded these files: ',
+    result.successful,
   );
 });

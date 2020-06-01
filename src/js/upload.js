@@ -1,7 +1,7 @@
 // see aws-sdk docs
-const path = require('path'),
-  multer = require('multer'),
-  aws = require('aws-sdk');
+const path = require('path');
+const multer = require('multer');
+const aws = require('aws-sdk');
 
 require('dotenv').config();
 
@@ -13,17 +13,14 @@ aws.config.update({
 const s3 = new aws.S3();
 
 const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, path.join(__dirname, '../uploads'));
+  destination(req, file, cb) {
+    cb(null, path.join(__dirname, '../../tmp/uploads'));
   },
-  filename: function (req, file, cb) {
-    cb(
-      null,
-      path.parse(file.originalname).name + Date.now().toString() + '.jpg'
-    );
+  filename(req, file, cb) {
+    cb(null, `path.parse(file.originalname).name${Date.now().toString()}.jpg`);
   },
 });
 
-const upload = multer({ storage: storage });
+const upload = multer({ storage });
 
 module.exports = { upload, s3 };

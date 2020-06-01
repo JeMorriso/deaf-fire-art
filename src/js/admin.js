@@ -1,5 +1,5 @@
-const mongoose = require("mongoose");
-const passportLocalMongoose = require("passport-local-mongoose");
+const mongoose = require('mongoose');
+const passportLocalMongoose = require('passport-local-mongoose');
 
 const AdminSchema = new mongoose.Schema({
   username: String,
@@ -10,4 +10,4 @@ const AdminSchema = new mongoose.Schema({
 AdminSchema.plugin(passportLocalMongoose);
 
 // Name of the model is Admin (from filename), and we're using the AdminSchema as its schema
-module.exports = mongoose.model("Admin", AdminSchema);
+module.exports = mongoose.model('Admin', AdminSchema);

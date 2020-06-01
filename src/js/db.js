@@ -1,6 +1,6 @@
-const mysql = require("mysql");
+const mysql = require('mysql');
 
-require("dotenv").config();
+require('dotenv').config();
 
 const db = mysql.createPool({
   host: process.env.HOST,
