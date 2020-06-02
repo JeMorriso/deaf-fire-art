@@ -176,7 +176,9 @@ router.get('/gallery/new', (req, res) => {
   res.render('new');
 });
 
-router.get('/gallery/:id/edit', (req, res) => {
+router.get('/gallery/:id/edit', isLoggedIn, (req, res) => {
+  // TODO: add check for isLoggedIn
+
   db.query(
     'SELECT file_prefix, item_description, item_price FROM images where id = ?',
     req.params.id,
@@ -220,6 +222,22 @@ router.post('/gallery/delete', (req, res) => {
   });
 });
 
+router.post('/gallery/:id/edit', (req, res) => {
+  db.query(
+    {
+      sql:
+        'update images set item_description = ?, item_price = ? where id = ?',
+      values: [req.body.item_description, req.body.item_price, req.params.id],
+    },
+    (err, results, fields) => {
+      if (err) {
+        console.log(err);
+      }
+    },
+  );
+  res.redirect('/gallery');
+});
+
 router.post('/email', (req, res) => {
   const mailOptions = {
     from: req.body.email,
@@ -239,10 +257,7 @@ router.post('/email', (req, res) => {
 });
 
 router.get('/about', (req, res) => {
-  res.render('about', {
-    title: 'About Me',
-    name: 'Jeremy Morrison',
-  });
+  res.render('about');
 });
 
 router.get('/login', (req, res) => {
