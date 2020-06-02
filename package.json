@@ -28,10 +28,11 @@
     "@uppy/dashboard": "^1.5.1",
     "@uppy/xhr-upload": "^1.4.1",
     "aws-sdk": "^2.604.0",
+    "connect-redis": "^4.0.4",
     "dotenv": "^8.2.0",
     "ejs": "^3.0.1",
     "express": "^4.17.1",
-    "express-session": "^1.17.0",
+    "express-session": "^1.17.1",
     "lightbox2": "^2.11.1",
     "mongodb": "^3.5.4",
     "mongoose": "^5.9.2",
@@ -42,6 +43,7 @@
     "passport": "^0.4.1",
     "passport-local": "^1.0.0",
     "passport-local-mongoose": "^6.0.1",
+    "redis": "^3.0.2",
     "sharp": "^0.24.0"
   },
   "devDependencies": {

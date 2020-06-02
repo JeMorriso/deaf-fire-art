@@ -3,6 +3,11 @@ const path = require('path');
 const passport = require('passport');
 
 const LocalStrategy = require('passport-local').Strategy;
+const session = require('express-session');
+const redis = require('redis');
+const RedisStore = require('connect-redis')(session);
+
+const redisClient = redis.createClient();
 
 const Admin = require('./js/admin');
 
@@ -15,11 +20,12 @@ const app = express();
 const routes = require('./routers/routes');
 
 app.use(
-  require('express-session')({
+  session({
+    store: new RedisStore({ client: redisClient }),
     secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: false,
-    cookie: { maxAge: 60 * 60 * 1000 },
+    cookie: { maxAge: 60 * 60 * 1000, secure: false },
   }),
 );
 
