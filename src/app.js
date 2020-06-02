@@ -16,9 +16,10 @@ const routes = require('./routers/routes');
 
 app.use(
   require('express-session')({
-    secret: 'pyro kid',
+    secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: false,
+    cookie: { maxAge: 60 * 60 * 1000 },
   }),
 );
 
