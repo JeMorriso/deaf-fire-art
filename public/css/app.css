@@ -24,13 +24,14 @@ body {
 }
 
 div.container {
-  height: 100vh;
+  min-height: 100vh;
 }
 
 footer.container {
   position: -webkit-sticky;
   position: sticky;
   bottom: 0px;
+  top: 0px;
   text-align: right;
 }
 
@@ -180,19 +181,19 @@ nav li {
   color: #7f7f7f;
 }
 
+form .ui-btn {
+  color: #7f7f7f;
+}
+
+form .ui-btn:hover {
+  background-color: #7f7f7f;
+  color: white;
+}
+
 button.ui-btn {
   background-color: transparent;
   border: none;
   outline: none;
-}
-
-#email-form .ui-btn {
-  color: #7f7f7f;
-}
-
-#email-form .ui-btn:hover {
-  background-color: #7f7f7f;
-  color: white;
 }
 
 .card-edit {
@@ -252,21 +253,24 @@ button.ui-btn {
   cursor: pointer;
 }
 
-#email-popup {
+form {
   max-width: 400px;
-  display: none;
-  position: absolute;
-  bottom: 0;
-  right: 0;
   background-color: white;
   color: #7f7f7f;
   padding: 20px;
   border-radius: 8px;
 }
 
-#email-popup textarea,
-#email-popup input {
+form textarea,
+form input {
   width: 100%;
+}
+
+#email-popup {
+  display: none;
+  position: absolute;
+  bottom: 0;
+  right: 0;
 }
 
 #email-popup div {

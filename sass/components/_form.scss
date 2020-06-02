@@ -1,11 +1,5 @@
-#email-popup {
+form {
   max-width: 400px;
-  display: none;
-
-  // inside sticky footer element!
-  position: absolute;
-  bottom: 0;
-  right: 0;
   background-color: $base-color;
   color: $secondary-color;
   padding: 20px;
@@ -15,6 +9,15 @@
   input {
     width: 100%;
   }
+}
+
+#email-popup {
+  display: none;
+
+  // inside sticky footer element!
+  position: absolute;
+  bottom: 0;
+  right: 0;
 
   div {
     text-align: right;

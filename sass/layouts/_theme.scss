@@ -24,12 +24,14 @@ body {
 }
 
 div.container {
-  height: 100vh;
+  // for sticky footer
+  min-height: 100vh;
 }
 
 footer.container {
   position: sticky;
   bottom: 0px;
+  top: 0px;
   text-align: right;
   // padding-bottom: 1rem;
 }
