@@ -4,6 +4,31 @@
   <body>
     <div class="container">
       <%- include('partials/navbar') %>
+      <h1>Edit Image</h1>
+      <form action="/" method="POST">
+        <label for="description"><b>Item Description</b></label>
+        <input
+          id="description"
+          type="text"
+          placeholder="<%= image.item_description %>"
+          name="description"
+        />
+
+        <label for="price"><b>Item Price</b></label>
+        <input
+          id="price"
+          type="text"
+          placeholder="<%= image.item_price %>"
+          name="price"
+        />
+
+        <div>
+          <button class="ui-btn" type="submit">Submit</button>
+          <a href="/gallery">
+            <button class="ui-btn" type="button">Cancel</button>
+          </a>
+        </div>
+      </form>
     </div>
   </body>
 </html>

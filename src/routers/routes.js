@@ -176,6 +176,31 @@ router.get('/gallery/new', (req, res) => {
   res.render('new');
 });
 
+router.get('/gallery/:id/edit', (req, res) => {
+  db.query(
+    'SELECT file_prefix, item_description, item_price FROM images where id = ?',
+    req.params.id,
+    (err, results) => {
+      if (err) {
+        console.log(err);
+      }
+      let image;
+      if (results.length) {
+        image = {
+          image_url_prefix: process.env.BUCKET_URL + results[0].file_prefix,
+          id: req.params.id,
+          item_description: results[0].item_description,
+          item_price: results[0].item_price,
+          file_prefix: results[0].file_prefix,
+        };
+      }
+      res.render('edit', {
+        image,
+      });
+    },
+  );
+});
+
 router.post('/gallery/delete', (req, res) => {
   console.log(req.body);
 
