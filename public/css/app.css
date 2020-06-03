@@ -253,6 +253,23 @@ button.ui-btn {
   cursor: pointer;
 }
 
+.draggable {
+  cursor: move;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+}
+
+.drag-ghost {
+  border: 1px dashed #fff;
+  background-color: rgba(0, 0, 0, 0);
+}
+
+.drag-ghost * {
+  opacity: 0;
+}
+
 form {
   max-width: 400px;
   background-color: white;

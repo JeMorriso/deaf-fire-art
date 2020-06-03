@@ -39,3 +39,20 @@
     cursor: pointer;
   }
 }
+
+.draggable {
+  cursor: move;
+  // text is not highlightable (drag instead)
+  user-select: none;
+}
+
+.drag-ghost {
+  border: 1px dashed #fff;
+  // make card background transparent
+  background-color: rgba(0, 0, 0, 0);
+
+  // blank out all child elements - can't do this to card, because border becomes transparent also.
+  & * {
+    opacity: 0;
+  }
+}
