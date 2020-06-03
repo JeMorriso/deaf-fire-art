@@ -6,7 +6,9 @@
       <%- include("partials/navbar") %>
       <h1>Login</h1>
       <form action="/login" method="POST">
+        <label for="username"><b>Username</b></label>
         <input type="text" name="username" placeholder="username" />
+        <label for="password"><b>Password</b></label>
         <input type="password" name="password" placeholder="password" />
         <button class="ui-btn">Submit</button>
       </form>
