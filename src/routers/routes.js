@@ -203,7 +203,7 @@ router.get('/gallery/:id/edit', isLoggedIn, (req, res) => {
   );
 });
 
-router.post('/gallery/delete', (req, res) => {
+router.post('/gallery/update', (req, res) => {
   console.log(req.body);
 
   // delete image passed in on req.body from database

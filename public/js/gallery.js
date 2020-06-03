@@ -65,9 +65,9 @@ const emailIcons = document.getElementsByClassName('card-email');
 // let toggle = 'block';
 
 for (let i = 0; i < emailIcons.length; i++) {
-  emailIcons[i].addEventListener('click', function () {
+  emailIcons[i].addEventListener('click', (e) => {
     const itemDescription =
-      emailIcons[i].parentElement.previousElementSibling.innerText;
+      e.target.parentElement.previousElementSibling.innerText;
     document.getElementById('email-subject').value = itemDescription;
 
     // Not correct! style.display only get style that has been defined inline using style attribute
@@ -87,22 +87,13 @@ if (isLoggedIn) {
   const deleteIcons = document.getElementsByClassName('card-delete');
 
   for (let i = 0; i < deleteIcons.length; i++) {
-    deleteIcons[i].addEventListener('click', () => {
+    deleteIcons[i].addEventListener('click', (e) => {
       // show the 'delete' and 'cancel' buttons if they aren't already showing
-      // const deleteDisplay = window.getComputedStyle(
-      //   document.getElementById('delete-btn'),
-      // ).display;
-      document.getElementById('delete-btn').style.display = 'inline-block';
-      // deleteDisplay === 'inline-block' ? 'none' : 'inline-block';
-
-      // const cancelDisplay = window.getComputedStyle(
-      //   document.getElementById('cancel-btn'),
-      // ).display;
+      document.getElementById('update-btn').style.display = 'inline-block';
       document.getElementById('cancel-btn').style.display = 'inline-block';
-      // cancelDisplay === 'inline-block' ? 'none' : 'inline-block';
 
       // Hide the image
-      deleteIcons[i].parentElement.parentElement.style.display = 'none';
+      e.target.closest('.card').style.display = 'none';
     });
   }
 
@@ -134,19 +125,6 @@ if (isLoggedIn) {
       dragElement.classList.add('drag-ghost');
     }, 0);
   });
-  // document
-  //   .getElementsByClassName('grid')[0]
-  //   .addEventListener('dragstart', (e) => {
-  //     console.log('drag!');
-
-  //     const dragElement = e.target;
-  //     const nextElement = dragElement.nextElementSibling;
-
-  //     // the data being dragged will be moved
-  //     e.dataTransfer.effectAllowed = 'move';
-  //     e.dataTransfer.setData('application/x-moz-node', dragElement);
-  //     console.log(e.dataTransfer);
-  //   });
 
   document.getElementById('cancel-btn').addEventListener('click', () => {
     const galleryImages = document.getElementsByClassName('card');
@@ -155,11 +133,11 @@ if (isLoggedIn) {
     }
 
     // Hide delete / cancel buttons
-    document.getElementById('delete-btn').style.display = 'none';
+    document.getElementById('update-btn').style.display = 'none';
     document.getElementById('cancel-btn').style.display = 'none';
   });
 
-  document.getElementById('delete-btn').addEventListener('click', () => {
+  document.getElementById('update-btn').addEventListener('click', () => {
     // stores all the files that are to be deleted on the backend
     const files = [];
 
@@ -172,7 +150,7 @@ if (isLoggedIn) {
       }
     }
 
-    fetch('/gallery/delete', {
+    fetch('/gallery/update', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
