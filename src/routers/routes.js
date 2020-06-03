@@ -52,7 +52,7 @@ router.get('/gallery', isLoggedIn, (req, res) => {
   }
 
   db.query(
-    'SELECT id, file_prefix, item_description, item_price FROM images',
+    'SELECT id, file_prefix, item_description, item_price FROM images order by index_',
     (err, results) => {
       if (err) {
         console.log(err);
@@ -88,88 +88,120 @@ router.post('/gallery', isLoggedIn, (req, res, next) => {
     if (err) {
       console.log(err);
     } else {
-      // there is a bit of magic happening here that I am unsure of.
-      // Basically, a new req.body is passed in for each file.
-      // then I am able to use that unique req.body for each of the images.
-      // req.files is an array.
-      // due to closure, it works out, and the correct metadata is attached to the correct file
-      req.files.forEach((image) => {
-        const filePrefix = path.parse(image.filename).name;
-        const smallFname = `${path.parse(image.filename).name}-small.jpg`;
-        const bigFname = `${path.parse(image.filename).name}-big.jpg`;
+      // get size of images table to determine the index
+      // TODO: fix same index bug coming from callback hell and poor async control
+      db.query(
+        'select count(*) as count from images',
+        (err, result, fields) => {
+          if (err) {
+            console.log(err);
+          } else {
+            const index_ = result[0].count;
 
-        sharp(image.path)
-          .resize({
-            width: 400,
-            height: 300,
-          })
-          .toFile(
-            path.join(__dirname, `../../tmp/processed_uploads/${smallFname}`),
-          )
-          .then(() => {
-            const fileContent = fs.readFileSync(
-              path.join(__dirname, `../../tmp/processed_uploads/${smallFname}`),
-            );
-            const params = {
-              Bucket: process.env.BUCKET_NAME,
-              Key: smallFname,
-              Body: fileContent,
-              // this is needed once I switched from using multer-S3 to AWS SDK directly even though permissions on the bucket allow public access
-              // ACL = Access Control List
-              ACL: 'public-read',
-            };
-            upload.s3.upload(params, (err) => {
-              if (err) {
-                console.log(err);
-              } else {
-                // data.Key must be equal to small_fname
-                const itemDescription = req.body['item-description'];
-                const itemPrice = req.body['item-price'];
-                db.query(
-                  {
-                    sql: `INSERT INTO images SET file_prefix=?, item_description=?, item_price=?`,
-                    values: [filePrefix, itemDescription, itemPrice],
-                  },
-                  (err, results, fields) => {
+            // there is a bit of magic happening here that I am unsure of.
+            // Basically, a new req.body is passed in for each file.
+            // then I am able to use that unique req.body for each of the images.
+            // req.files is an array.
+            // due to closure, it works out, and the correct metadata is attached to the correct file
+            req.files.forEach((image, i) => {
+              const filePrefix = path.parse(image.filename).name;
+              const smallFname = `${path.parse(image.filename).name}-small.jpg`;
+              const bigFname = `${path.parse(image.filename).name}-big.jpg`;
+
+              sharp(image.path)
+                .resize({
+                  width: 400,
+                  height: 300,
+                })
+                .toFile(
+                  path.join(
+                    __dirname,
+                    `../../tmp/processed_uploads/${smallFname}`,
+                  ),
+                )
+                .then(() => {
+                  const fileContent = fs.readFileSync(
+                    path.join(
+                      __dirname,
+                      `../../tmp/processed_uploads/${smallFname}`,
+                    ),
+                  );
+                  const params = {
+                    Bucket: process.env.BUCKET_NAME,
+                    Key: smallFname,
+                    Body: fileContent,
+                    // this is needed once I switched from using multer-S3 to AWS SDK directly even though permissions on the bucket allow public access
+                    // ACL = Access Control List
+                    ACL: 'public-read',
+                  };
+
+                  upload.s3.upload(params, (err) => {
+                    if (err) {
+                      console.log(err);
+                    } else {
+                      // data.Key must be equal to small_fname
+                      const itemDescription = req.body['item-description'];
+                      const itemPrice = req.body['item-price'];
+
+                      db.query(
+                        {
+                          sql: `INSERT INTO images SET index_=?, file_prefix=?, item_description=?, item_price=?`,
+                          values: [
+                            index_ + i,
+                            filePrefix,
+                            itemDescription,
+                            itemPrice,
+                          ],
+                        },
+                        (err, results, fields) => {
+                          if (err) {
+                            console.log(err);
+                          }
+                        },
+                      );
+                    }
+                  });
+                });
+
+              sharp(image.path)
+                .resize({
+                  height: 900,
+                })
+                .toFile(
+                  path.join(
+                    __dirname,
+                    `../../tmp/processed_uploads/${bigFname}`,
+                  ),
+                )
+                .then(() => {
+                  const fileContent = fs.readFileSync(
+                    path.join(
+                      __dirname,
+                      `../../tmp/processed_uploads/${bigFname}`,
+                    ),
+                  );
+                  const params = {
+                    Bucket: process.env.BUCKET_NAME,
+                    Key: bigFname,
+                    Body: fileContent,
+                    ACL: 'public-read',
+                  };
+                  upload.s3.upload(params, (err, data) => {
                     if (err) {
                       console.log(err);
                     }
-                  },
-                );
-              }
+                  });
+                });
             });
-          });
-
-        sharp(image.path)
-          .resize({
-            height: 900,
-          })
-          .toFile(
-            path.join(__dirname, `../../tmp/processed_uploads/${bigFname}`),
-          )
-          .then(() => {
-            const fileContent = fs.readFileSync(
-              path.join(__dirname, `../../tmp/processed_uploads/${bigFname}`),
-            );
-            const params = {
-              Bucket: process.env.BUCKET_NAME,
-              Key: bigFname,
-              Body: fileContent,
-              ACL: 'public-read',
-            };
-            upload.s3.upload(params, (err, data) => {
-              if (err) {
-                console.log(err);
-              }
-            });
-          });
-      });
-      // FIX THIS - for some reason heroku not getting a response back even when files are successfully uploaded to mysql.
-      // It works on localhost and using `heroku local`, but not on heroku
-      // this statement allows uppy to recognize that the upload is complete
-      res.sendStatus(200);
+          }
+        },
+      );
     }
   });
+  // FIX THIS - for some reason heroku not getting a response back even when files are successfully uploaded to mysql.
+  // It works on localhost and using `heroku local`, but not on heroku
+  // this statement allows uppy to recognize that the upload is complete
+  res.sendStatus(200);
 });
 
 router.get('/gallery/new', (req, res) => {
