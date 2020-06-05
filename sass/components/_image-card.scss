@@ -3,6 +3,8 @@
   background-color: white;
   color: black;
   border-radius: 8px;
+  display: flex;
+  flex-direction: column;
 
   &-admin {
     margin-bottom: 10px;
@@ -27,16 +29,24 @@
 
   &-body {
     padding: 2px;
+    position: relative;
+    flex-grow: 1;
+    min-height: 1em;
   }
 
   &-text {
     font-style: italic;
   }
 
-  &-email,
   &-edit {
     float: right;
     cursor: pointer;
+  }
+
+  &-email {
+    position: absolute;
+    bottom: 0px;
+    right: 0px;
   }
 }
 
