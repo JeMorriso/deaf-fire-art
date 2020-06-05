@@ -7,7 +7,7 @@ const session = require('express-session');
 const redis = require('redis');
 const RedisStore = require('connect-redis')(session);
 
-const redisClient = redis.createClient();
+const redisClient = redis.createClient(process.env.REDIS_URL);
 
 const Admin = require('./js/admin');
 
@@ -21,7 +21,7 @@ const routes = require('./routers/routes');
 
 app.use(
   session({
-    store: new RedisStore({ client: redisClient, url: process.env.REDIS_URL }),
+    store: new RedisStore({ client: redisClient }),
     secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: false,
