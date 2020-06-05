@@ -21,7 +21,7 @@ const routes = require('./routers/routes');
 
 app.use(
   session({
-    store: new RedisStore({ client: redisClient }),
+    store: new RedisStore({ client: redisClient, url: process.env.REDIS_URL }),
     secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: false,
