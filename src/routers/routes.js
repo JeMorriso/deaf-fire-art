@@ -239,11 +239,11 @@ router.post('/gallery/update', (req, res) => {
   console.log(req.body);
 
   // delete image passed in on req.body from database
-  req.body.forEach((file) => {
+  req.body.toDelete.forEach((fileId) => {
     db.query(
       {
-        sql: 'delete from images where file_prefix = ?',
-        values: [file],
+        sql: 'delete from images where id = ?',
+        values: [fileId],
       },
       (err, results, fields) => {
         if (err) {
@@ -252,6 +252,19 @@ router.post('/gallery/update', (req, res) => {
       },
     );
   });
+
+  // change the index of the images (front-end rearrange)
+  for (const [k, v] of Object.entries(req.body.toUpdate)) {
+    db.query(
+      'update images set index_ = ? where id = ?',
+      [v, k],
+      (err, results, fields) => {
+        if (err) {
+          console.log(err);
+        }
+      },
+    );
+  }
 });
 
 router.post('/gallery/:id/edit', (req, res) => {

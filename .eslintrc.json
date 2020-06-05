@@ -9,7 +9,8 @@
     "no-plusplus": [2, { "allowForLoopAfterthoughts": true }],
     "func-names": "off",
     "node/no-unpublished-require": "off",
-    "no-restricted-syntax": "off"
+    "no-restricted-syntax": "off",
+    "no-underscore-dangle": "off"
   },
   "env": {
     "browser": true,

@@ -6,7 +6,7 @@
       <%- include("partials/navbar") %>
       <!-- easiest way to use props from res.render is just inserting js here, instead of using a new js file -->
       <% if (isLoggedIn) { %>
-      <a class="ui-btn btn admin" id="add-new-image" href="/gallery/new"
+      <a class="ui-btn btn" id="add-new-image" href="/gallery/new"
         >Add New Image</a
       >
       <% } %>
@@ -54,7 +54,7 @@
       </div>
       <% if (isLoggedIn) { %>
       <button id="update-btn" class="ui-btn" type="button">
-        Delete Images
+        Update Images
       </button>
       <button id="cancel-btn" class="ui-btn" type="button">Cancel</button>
       <% } %>
