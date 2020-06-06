@@ -12,9 +12,23 @@
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   justify-items: center;
   // align-items: center;
-  max-width: 1200px;
+  // max-width: 1200px;
   gap: 50px;
-  margin: auto;
+  // margin: auto;
   margin-top: 10%;
   // height: 100vh;
+
+  &.grid-about {
+    grid-template-columns: repeat(2, minmax(300px, 1fr));
+
+    @media (max-width: 1000px) {
+      & {
+        grid-template-columns: 1fr;
+      }
+
+      .card-about {
+        grid-row: 1;
+      }
+    }
+  }
 }

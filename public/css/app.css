@@ -38,10 +38,17 @@ footer.container {
 h1 {
   font-family: 'Kaushan Script', cursive;
   margin-top: 10%;
+  margin-left: 7%;
 }
 
 p {
   font-size: 1.2rem;
+}
+
+img {
+  width: 100%;
+  max-width: 555px;
+  border-radius: 6px;
 }
 
 nav {
@@ -87,10 +94,24 @@ nav li {
   -ms-grid-columns: (minmax(300px, 1fr))[auto-fill];
       grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   justify-items: center;
-  max-width: 1200px;
   gap: 50px;
-  margin: auto;
   margin-top: 10%;
+}
+
+.grid.grid-about {
+  -ms-grid-columns: (minmax(300px, 1fr))[2];
+      grid-template-columns: repeat(2, minmax(300px, 1fr));
+}
+
+@media (max-width: 1000px) {
+  .grid.grid-about {
+    -ms-grid-columns: 1fr;
+        grid-template-columns: 1fr;
+  }
+  .grid.grid-about .card-about {
+    -ms-grid-row: 1;
+    grid-row: 1;
+  }
 }
 
 #splash-container {
@@ -269,6 +290,15 @@ button.ui-btn {
   position: absolute;
   bottom: 0px;
   right: 0px;
+}
+
+.card-about {
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -ms-flex-item-align: center;
+      -ms-grid-row-align: center;
+      align-self: center;
 }
 
 .draggable {

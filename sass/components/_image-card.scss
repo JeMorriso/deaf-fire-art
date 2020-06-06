@@ -48,6 +48,13 @@
     bottom: 0px;
     right: 0px;
   }
+
+  &-about {
+    // flex items within
+    justify-content: center;
+    // grid item inside grid
+    align-self: center;
+  }
 }
 
 .draggable {
