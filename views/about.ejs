@@ -4,8 +4,8 @@
   <body>
     <div class="container">
       <%- include("partials/navbar") %>
-      <div>
-        <h1>About Sandy</h1>
+      <h1>About Sandy</h1>
+      <div class="grid grid-about">
         <p>
           Hi, I am William (nickname Sandy). I was a teacher of the deaf, now
           recently retired and residing in Victoria, BC. My hobbies include
@@ -19,7 +19,55 @@
           coasters and pins are some others things I do for charity and open
           commissions, especially for those in need.
         </p>
+        <div class="card card-about">
+          <img src="img/BillSr.jpeg" alt="Picture of William" />
+        </div>
       </div>
     </div>
+    <footer class="container">
+      <button id="email-open" class="ui-btn" type="button">
+        Email Sandy
+      </button>
+      <div id="email-popup">
+        <!-- not sure what route I should use -->
+        <form action="/email" method="POST" id="email-form">
+          <h1>Email Sandy</h1>
+
+          <label for="email"><b>Email</b></label>
+          <input
+            id="email-address"
+            type="email"
+            placeholder="Your Email"
+            name="email"
+            required
+          />
+
+          <label for="subject"><b>Subject</b></label>
+          <input
+            id="email-subject"
+            type="text"
+            placeholder="Subject"
+            name="subject"
+            required
+          />
+
+          <label for="body"><b>Body</b></label>
+          <textarea
+            id="email-body"
+            placeholder="Enter text here..."
+            name="body"
+            required
+          ></textarea>
+
+          <div>
+            <button class="ui-btn" type="submit">Send Email</button>
+            <button class="ui-btn" id="email-cancel" type="button">
+              Cancel
+            </button>
+          </div>
+        </form>
+      </div>
+    </footer>
+    <script src="/js/email.js"></script>
   </body>
 </html>
