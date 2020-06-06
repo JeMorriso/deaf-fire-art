@@ -5,6 +5,7 @@
     <div class="container">
       <%- include("partials/navbar") %>
       <!-- easiest way to use props from res.render is just inserting js here, instead of using a new js file -->
+      <h1>Gallery</h1>
       <% if (isLoggedIn) { %>
       <a class="ui-btn btn" id="add-new-image" href="/gallery/new"
         >Add New Image</a
@@ -99,6 +100,7 @@
         </form>
       </div>
     </footer>
+    <script src="/js/email.js"></script>
     <script src="/js/gallery.js"></script>
     <script src="/dist/lightbox-plus-jquery.min.js"></script>
     <script>
