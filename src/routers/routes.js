@@ -325,30 +325,30 @@ router.post(
   },
 );
 
-router.get('/register', (req, res) => {
-  res.render('register');
-});
+// router.get('/register', (req, res) => {
+//   res.render('register');
+// });
 
-router.post('/register', (req, res) => {
-  // this method will hash the password
-  // if it worked, the new user is returned as the second argument to the callback function
-  Admin.register(
-    new Admin({ username: req.body.username }),
-    req.body.password,
-    (err, user) => {
-      if (err) {
-        console.log(err);
-        // go back to the register page
-        return res.render('register');
-      }
-      // runs the serializeUser() method using the local strategy
-      passport.authenticate('local')(req, res, () => {
-        return res.redirect('gallery');
-      });
-      return null;
-    },
-  );
-});
+// router.post('/register', (req, res) => {
+//   // this method will hash the password
+//   // if it worked, the new user is returned as the second argument to the callback function
+//   Admin.register(
+//     new Admin({ username: req.body.username }),
+//     req.body.password,
+//     (err, user) => {
+//       if (err) {
+//         console.log(err);
+//         // go back to the register page
+//         return res.render('register');
+//       }
+//       // runs the serializeUser() method using the local strategy
+//       passport.authenticate('local')(req, res, () => {
+//         return res.redirect('gallery');
+//       });
+//       return null;
+//     },
+//   );
+// });
 
 // note here we don't even need to set up a view, since it just redirects straightaway
 router.get('/logout', (req, res) => {
